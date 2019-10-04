@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/friend/friend.iml" filepath="$PROJECT_DIR$/friend/friend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/identity/identity.iml" filepath="$PROJECT_DIR$/identity/identity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server/server.iml" filepath="$PROJECT_DIR$/server/server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/webIM.iml" filepath="$PROJECT_DIR$/.idea/webIM.iml" />
+      <module fileurl="file://$PROJECT_DIR$/friend/webim (1) (com.hx.webIM).iml" filepath="$PROJECT_DIR$/friend/webim (1) (com.hx.webIM).iml" />
+      <module fileurl="file://$PROJECT_DIR$/identity/webim (2).iml" filepath="$PROJECT_DIR$/identity/webim (2).iml" />
+      <module fileurl="file://$PROJECT_DIR$/zuul/zuul.iml" filepath="$PROJECT_DIR$/zuul/zuul.iml" />
+    </modules>
+  </component>
+</project>
