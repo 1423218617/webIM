@@ -27,6 +27,6 @@ public class UserMapperTest {
         user.setActive("asdfgh");
         user.setEmail("asdfghjklktre");
         user.setCreate_date(1570177634);
-        userMapper.saveUser(user);
+        userMapper.insertUser(user);
     }
 }
