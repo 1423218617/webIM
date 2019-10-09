@@ -10,17 +10,10 @@ public class User {
     private String email;
     private String avatar;
     private int sex;
+    private int is_active;
     private String active;
     private String status;
     private long create_date;
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Override
     public String toString() {
@@ -32,10 +25,19 @@ public class User {
                 ", email='" + email + '\'' +
                 ", avatar='" + avatar + '\'' +
                 ", sex=" + sex +
+                ", is_active=" + is_active +
                 ", active='" + active + '\'' +
                 ", status='" + status + '\'' +
-                ", create_date='" + create_date + '\'' +
+                ", create_date=" + create_date +
                 '}';
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {
@@ -84,6 +86,14 @@ public class User {
 
     public void setSex(int sex) {
         this.sex = sex;
+    }
+
+    public int getIs_active() {
+        return is_active;
+    }
+
+    public void setIs_active(int is_active) {
+        this.is_active = is_active;
     }
 
     public String getActive() {

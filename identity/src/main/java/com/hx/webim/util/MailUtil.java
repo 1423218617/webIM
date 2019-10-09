@@ -21,20 +21,22 @@ public class MailUtil {
     private static final Logger logger= LoggerFactory.getLogger(MailUtil.class);
 
 
+    private static final String subject= "webIM即时通讯系统邮箱激活邮件";
+
 
     private static   JavaMailSender javaMailSender;
 
 
     private static  String fromMail;
 
-    public static   boolean sendHtmlMail(String toMail){
+    public static   boolean sendHtmlMail(String toMail,String content){
         MimeMessage mimeMessage= javaMailSender.createMimeMessage();
         try {
             MimeMessageHelper helper=new MimeMessageHelper(mimeMessage,true);
             helper.setFrom(fromMail);
             helper.setTo(toMail);
-            helper.setSubject("demo");
-            helper.setText("777",true);
+            helper.setSubject(subject);
+            helper.setText(content,true);
             javaMailSender.send(mimeMessage);
             return true;
 

@@ -5,7 +5,26 @@
     <insert
             id="insertUser" parameterType="com.hx.webim.model.pojo.User"
             useGeneratedKeys="true">
-        insert into t_user(username, password,  email, active, create_date)
-         values(#{username},#{password},#{email},#{active},#{create_date})
+        insert into t_user(username, password,  email, is_active,active, create_date)
+         values(#{username},#{password},#{email},#{is_active},#{active},#{create_date})
     </insert>
+    <select id="selectUser" parameterType="com.hx.webim.model.pojo.User" resultType="com.hx.webim.model.pojo.User">
+        select * from t_user where
+        <if test="id!=null">id=#{id} and</if>
+        <if test="active!=null">active=#{active}</if>,
+    </select>
+    <update id="updateUser" parameterType="com.hx.webim.model.pojo.User" >
+        update t_user set 
+        <if test="username!=null">username=#{username}</if>,
+        <if test="password!=null">password=#{password}</if>,
+        <if test="sign!=null">sign=#{sign}</if>,
+        <if test="sex!=null">sex=#{sex}</if>,
+        <if test="is_active!=null">is_active=#{is_active}</if>,
+        <if test="avatar!=null">avatar=#{avatar}</if>,
+        <if test="status!=null">status=#{status}</if>,
+
+    </update>
+    <select id="UserAllEmail" resultType="String">
+        select email from t_user
+    </select>
 </mapper>

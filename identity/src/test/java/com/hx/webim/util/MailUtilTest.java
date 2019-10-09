@@ -14,6 +14,6 @@ public class MailUtilTest {
 
     @Test
     public void sendHtmlMail() {
-        MailUtil.sendHtmlMail("1423218617@qq.com");
+     //   MailUtil.sendHtmlMail("1423218617@qq.com");
     }
 }
