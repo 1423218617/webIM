@@ -29,4 +29,14 @@ public class UserMapperTest {
         user.setCreate_date(1570177634);
         userMapper.insertUser(user);
     }
+
+    @Test
+    public void findUsersByFriendGroupIds() {
+        System.out.println(userMapper.findUsersByFriendGroupIds(1));
+    }
+
+    @Test
+    public void findGroupById() {
+        System.out.println(userMapper.findGroupById(121));
+    }
 }

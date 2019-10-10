@@ -5,16 +5,15 @@ import com.hx.webim.model.pojo.User;
 import java.util.List;
 
 public class FriendAndGroupInfo {
-    private User mime;
+    private User mine;
     private List<FriendList> friend;
     private List<GroupList> group;
-
-    public User getMime() {
-        return mime;
+    public User getMine() {
+        return mine;
     }
 
-    public void setMime(User mime) {
-        this.mime = mime;
+    public void setMine(User mime) {
+        this.mine = mine;
     }
 
     public List<FriendList> getFriend() {

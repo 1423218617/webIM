@@ -130,7 +130,7 @@ layui.use(['layim', 'jquery', 'laytpl'], function(layim){
 		title: "我的LayIM",
 	    //初始化接口
 	    init: {
-	    	url: '/user/init/' + getUid()
+	    	url: '/identity/init/' + getUid()
 	      	,data: {id : getUid()}
 	  	  	,type:'post'
 	    }

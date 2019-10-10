@@ -38,4 +38,14 @@ public class GroupList {
     public void setCreateId(Integer createId) {
         this.createId = createId;
     }
+
+    @Override
+    public String toString() {
+        return "GroupList{" +
+                "id=" + id +
+                ", groupname='" + groupname + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", createId=" + createId +
+                '}';
+    }
 }

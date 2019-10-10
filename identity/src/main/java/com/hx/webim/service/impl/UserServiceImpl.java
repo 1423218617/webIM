@@ -5,6 +5,8 @@ import com.hx.webim.common.ExceptionEnum;
 import com.hx.webim.common.UserActiveStatusEnum;
 import com.hx.webim.mapper.UserMapper;
 import com.hx.webim.model.domain.FriendList;
+import com.hx.webim.model.domain.GroupList;
+import com.hx.webim.model.pojo.Group;
 import com.hx.webim.model.pojo.User;
 import com.hx.webim.service.UserService;
 import com.hx.webim.util.DateUtil;
@@ -74,8 +76,23 @@ public class UserServiceImpl implements UserService {
         return u;
     }
 
+    /**
+     *
+     * @descrption 分组
+     * @param uid
+     * @return
+     */
     @Override
     public List<FriendList> findFriendGroupsById(Integer uid) {
-        return userMapper.findFriendGroupsById(uid);
+        List<FriendList> friendList= userMapper.findFriendGroupsById(uid);
+        friendList.forEach(friendList1 -> {
+            friendList1.setUserList(userMapper.findUsersByFriendGroupIds(friendList1.getId()));
+        });
+        return friendList ;
+    }
+
+    @Override
+    public List<GroupList> findGroupsById(Integer uid) {
+        return userMapper.findGroupById(uid) ;
     }
 }

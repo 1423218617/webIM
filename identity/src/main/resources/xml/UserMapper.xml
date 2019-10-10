@@ -30,4 +30,12 @@
     <select id="findFriendGroupsById" resultType="com.hx.webim.model.domain.FriendList" parameterType="Integer">
         select id, group_name  from t_friend_group where uid = #{id}
     </select>
+
+    <select id="findUsersByFriendGroupIds" resultType="com.hx.webim.model.pojo.User" parameterType="Integer">
+        select id,username,avatar,sign,status,email,sex from t_user where id in
+        (select uid from t_friend_group_friends where fgid = #{fgid})
+    </select>
+    <select id="findGroupById" resultType="com.hx.webim.model.domain.GroupList">
+        select * from t_group where id in (select gid from t_group_members where uid=#{uid} )
+    </select>
 </mapper>

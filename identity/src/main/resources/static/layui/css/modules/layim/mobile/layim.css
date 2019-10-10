@@ -9,14 +9,49 @@
 /* 加载就绪标志 */
 html #layuicss-skinlayim-mobilecss{display: none; position: absolute; width: 1989px;}
 
-/* 辅助 */
+/* 主界面 */
+.layui-layim,
+.layim-chat{position: fixed; bottom: 0; top: 0; left: 0; right: 0;}
+.layui-layim-tab li,
+.layim-tab-content li h5 *,
+.layui-layim-tool li,
+.layui-layim-skin li{display: inline-block; vertical-align: top; *zoom: 1; *display: inline;}
+.layui-layim-list li p,
+.layim-tab-content li h5 span,
+.layui-layim-list li span{overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+
+
+
+.layui-layim-tab{display: none; position: fixed; bottom: 0; left: 0; right: 0; height: 50px; border-top: 1px solid #f2f2f2; font-size: 0; background-color: #fff;}
+.layui-layim-tab li{position: relative; width: 33.33%; height: 50px; line-height: 50px; font-size: 22px; text-align: center; color: #666; color: rgba(0,0,0,.6); cursor: pointer;}
+
+.layim-tab-content{display: none; position: fixed; top: 50px; bottom: 0; left: 0; right: 0; overflow-x: hidden;  overflow-y: auto; padding: 10px 0;}
+.layim-tab-content li h5{position:relative; padding-left: 30px; height: 42px; line-height: 42px; cursor:pointer; font-size:0; border-bottom: 1px solid #f2f2f2; white-space: nowrap; overflow: hidden;}
+.layim-tab-content li h5 *{font-size: 14px;}
+.layim-tab-content li h5 span{max-width: 125px;}
+.layim-tab-content li h5 i{position: absolute; left: 12px; top: 0; color: #C9BDBB;}
+.layim-tab-content li h5 em{padding-left: 5px; color: #999;}
+.layim-tab-content li h5[lay-type="true"] i{top: 2px;}
+.layim-tab-content li ul{display: none; margin-bottom: 10px;}
+.layui-layim-list li{position:relative; height: 42px; border-bottom: 1px solid #f2f2f2; padding: 5px 15px 5px 60px; font-size:0; cursor:pointer;}
+.layui-layim-list li:hover{background-color: #F2F2F2; background-color: rgba(0,0,0,0.05);}
+.layui-layim-list li.layim-null{height: 20px; line-height: 20px; padding: 0; font-size: 14px; color: #999; text-align: center; cursor: default;}
+.layui-layim-list li.layim-null:hover{background: none;}
+.layui-layim-list li *{display:inline-block; *display:inline; *zoom:1; vertical-align:top; font-size: 14px;}
+.layui-layim-list li span{margin-top: 4px; max-width: 155px;}
+.layui-layim-list li img{position: absolute; left: 15px; top: 8px; width: 36px; height: 36px; border-radius: 100%;}
+.layui-layim-list li p{display: block; line-height: 18px; font-size: 12px; color: #999;}
+.layim-list-gray{-webkit-filter: grayscale(100%);  -ms-filter: grayscale(100%); filter: grayscale(100%); filter: gray;}
+
 
 
 /* 聊天面板 */
-.layim-chat{position: fixed; bottom: 0; top: 0; left: 0; right: 0; background-color: #eee;}
-
+.layim-chat{background-color: #eee;}
 .layim-chat-title{position: fixed; top: 0; left: 0; right: 0; height: 50px; line-height: 50px; text-align: center; background-color: #36373C; color: #fff; font-size: 16px;}
 .layim-chat-status{padding-left: 5px; font-size: 14px;}
+.layim-chat-title .layim-chat-back{display: inline-block; position: absolute; padding: 0 10px; left: 5px; font-size: 22px; cursor: pointer;}
+.layui-layim .layim-chat-title{text-align: left;}
+.layui-layim .layim-chat-title p{padding: 0 15px;}
 
 .layim-chat-main{position: fixed; width: 100%; bottom: 85px; top: 50px; left: 0; right: 0; padding: 15px;   overflow-y: auto; overflow-x: hidden; -webkit-box-sizing: border-box !important; -moz-box-sizing: border-box !important; box-sizing: border-box !important;}
 .layim-chat-main[nonetitle]{top: 0;}
