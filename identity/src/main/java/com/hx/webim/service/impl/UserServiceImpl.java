@@ -1,8 +1,10 @@
 package com.hx.webim.service.impl;
 
 import com.hx.webim.Exception.UserException;
+import com.hx.webim.common.ExceptionEnum;
 import com.hx.webim.common.UserActiveStatusEnum;
 import com.hx.webim.mapper.UserMapper;
+import com.hx.webim.model.domain.FriendList;
 import com.hx.webim.model.pojo.User;
 import com.hx.webim.service.UserService;
 import com.hx.webim.util.DateUtil;
@@ -42,6 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean active(User user) {
+        System.out.println(user);
         User u= userMapper.selectUser(user);
         if (u.getActive().equals(user.getActive())){
             u.setIs_active(UserActiveStatusEnum.YES.getCode());
@@ -56,10 +59,23 @@ public class UserServiceImpl implements UserService {
         List<String> emailList=userMapper.UserAllEmail();
         emailList.forEach(e->{
             if (e.equals(email)){
-                throw new UserException("邮箱已存在");
+                throw new UserException(ExceptionEnum.MAILBOXEXISTS.getMessage());
             }
         });
         return false;
 
+    }
+
+    @Override
+    public User getUserInfoById(Integer id) {
+        User user=new User();
+        user.setId(id);
+        User u=userMapper.selectUser(user);
+        return u;
+    }
+
+    @Override
+    public List<FriendList> findFriendGroupsById(Integer uid) {
+        return userMapper.findFriendGroupsById(uid);
     }
 }

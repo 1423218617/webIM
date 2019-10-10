@@ -3,14 +3,14 @@ package com.hx.webim.model.pojo;
 public class User {
 
 
-    private int id;
+    private Integer id;
     private String username;
     private String password;
     private String sign;
     private String email;
     private String avatar;
-    private int sex;
-    private int is_active;
+    private Integer sex;
+    private Integer is_active;
     private String active;
     private String status;
     private long create_date;
@@ -32,7 +32,7 @@ public class User {
                 '}';
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -80,7 +80,7 @@ public class User {
         this.avatar = avatar;
     }
 
-    public int getSex() {
+    public Integer getSex() {
         return sex;
     }
 
@@ -88,7 +88,7 @@ public class User {
         this.sex = sex;
     }
 
-    public int getIs_active() {
+    public Integer getIs_active() {
         return is_active;
     }
 

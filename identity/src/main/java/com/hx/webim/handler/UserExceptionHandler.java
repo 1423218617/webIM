@@ -18,9 +18,16 @@ public class UserExceptionHandler  {
     private static final Logger log= LoggerFactory.getLogger(UserExceptionHandler.class);
 
 
+    /**
+     *
+     * @description true为该邮箱已经注册
+     * @param request
+     * @param e
+     * @return
+     */
     @ExceptionHandler(value = UserException.class)
     public Object ss(HttpServletRequest request, UserException e){
         log.error(e.getMessage());
-        return new ResultVo<String>();
+        return true;
     }
 }

@@ -4,8 +4,8 @@ public class ResultVo<T> {
 
 
     private int code;
-    private String message;
-    private T Data;
+    private String msg;
+    private T data;
 
 
 
@@ -13,8 +13,8 @@ public class ResultVo<T> {
     public String toString() {
         return "ResultVo{" +
                 "code=" + code +
-                ", message='" + message + '\'' +
-                ", Data=" + Data +
+                ", msg='" + msg + '\'' +
+                ", data=" + data +
                 '}';
     }
 
@@ -26,19 +26,19 @@ public class ResultVo<T> {
         this.code = code;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public T getData() {
-        return Data;
+        return data;
     }
 
     public void setData(T data) {
-        Data = data;
+        this.data = data;
     }
 }

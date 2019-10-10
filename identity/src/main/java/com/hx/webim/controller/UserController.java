@@ -2,14 +2,20 @@ package com.hx.webim.controller;
 
 
 import com.hx.webim.Exception.UserException;
+import com.hx.webim.model.domain.FriendAndGroupInfo;
+import com.hx.webim.model.domain.FriendList;
 import com.hx.webim.model.pojo.User;
+import com.hx.webim.model.vo.ResultVo;
 import com.hx.webim.service.UserService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/identity")
 public class UserController {
 
@@ -26,30 +32,52 @@ public class UserController {
      * @param user
      *
      */
-    @GetMapping(value="/register")
-    public void register(@RequestBody User user) {
+    @PostMapping(value="/register")
+    @ResponseBody
+    public Object register(@RequestBody User user) {
         if (userService.register(user)){
-
+            ResultVo resultVo=new ResultVo();
+            resultVo.setMsg("注册成功");
+            return resultVo;
         }
+        return false;
     }
 
 
 
     @GetMapping("/active/{activeCode}")
-    public boolean active(@PathVariable String activeCode){
+    @ResponseBody
+    public Object active(@PathVariable String activeCode, HttpServletResponse response) throws Exception{
         User user=new User();
         user.setActive(activeCode);
         if(userService.active(user)){
-            return true;
+             response.sendRedirect("/#tologin?status=1");
         }
-        return false;
+        return "redirect:/#tologin?status=1";
     }
 
-    @RequestMapping("/existEmail")
-    public boolean existEmail(@RequestParam String email)   {
+    @PostMapping("/existEmail")
+    @ResponseBody
+    public Object existEmail(@RequestParam String email)   {
         userService.existEmail(email);
 
-        return  true;
+        return false;
 
+    }
+
+    @PostMapping("init/{userId}")
+    @ResponseBody
+    public Object index(@PathVariable String userId){
+        Integer id=Integer.parseInt(userId);
+        User user= userService.getUserInfoById(id);
+        List <FriendList> friend=userService.findFriendGroupsById(id);
+        FriendAndGroupInfo friendAndGroupInfo=new FriendAndGroupInfo();
+        friendAndGroupInfo.setMime(user);
+        friendAndGroupInfo.setFriend(friend);
+        ResultVo<FriendAndGroupInfo> resultVo=new ResultVo();
+        resultVo.setData(friendAndGroupInfo);
+        resultVo.setCode(1);
+        resultVo.setMsg("ok");
+        return resultVo;
     }
 }
