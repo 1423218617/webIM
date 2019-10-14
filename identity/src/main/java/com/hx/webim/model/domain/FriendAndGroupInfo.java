@@ -8,11 +8,12 @@ public class FriendAndGroupInfo {
     private User mine;
     private List<FriendList> friend;
     private List<GroupList> group;
+
     public User getMine() {
         return mine;
     }
 
-    public void setMine(User mime) {
+    public void setMine(User mine) {
         this.mine = mine;
     }
 

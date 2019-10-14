@@ -66,11 +66,12 @@ public class UserController {
 
     }
 
-    @PostMapping("init/{userId}")
+    @GetMapping("init/{userId}")
     @ResponseBody
     public Object index(@PathVariable String userId){
         Integer id=Integer.parseInt(userId);
         User user= userService.getUserInfoById(id);
+        System.out.println(user);
         List <FriendList> friend=userService.findFriendGroupsById(id);
         FriendAndGroupInfo friendAndGroupInfo=new FriendAndGroupInfo();
         friendAndGroupInfo.setMine(user);

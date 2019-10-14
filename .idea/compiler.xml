@@ -10,6 +10,7 @@
         <module name="friend" />
         <module name="webim (2)" />
         <module name="identity" />
+        <module name="page" />
         <module name="server" />
         <module name="webim (1) (com.hx.webIM)" />
       </profile>
@@ -17,6 +18,7 @@
     <bytecodeTargetLevel>
       <module name="friend" target="1.8" />
       <module name="identity" target="1.8" />
+      <module name="page" target="1.8" />
       <module name="server" target="1.8" />
       <module name="webim (1)" target="1.8" />
       <module name="webim (1) (com.hx.webIM)" target="1.8" />
@@ -30,6 +32,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="friend" options="-parameters" />
       <module name="identity" options="-parameters" />
+      <module name="page" options="-parameters" />
       <module name="server" options="-parameters" />
       <module name="webim (1)" options="-parameters" />
       <module name="webim (1) (com.hx.webIM)" options="-parameters" />
