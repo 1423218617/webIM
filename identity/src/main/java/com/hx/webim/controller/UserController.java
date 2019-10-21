@@ -96,5 +96,7 @@ public class UserController {
         resultVo.setMsg("群成员信息");
         resultVo.setData(groupMemberInfo);
         return resultVo;
+
+
     }
 }
