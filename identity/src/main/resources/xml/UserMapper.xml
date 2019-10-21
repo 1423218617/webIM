@@ -38,4 +38,7 @@
     <select id="findGroupById" resultType="com.hx.webim.model.domain.GroupList">
         select * from t_group where id in (select gid from t_group_members where uid=#{uid} )
     </select>
+    <select id="findGroupMembersByGid" resultType="com.hx.webim.model.pojo.User">
+        select * from t_user where id in (select uid from t_group_members where gid=#{gid} )
+    </select>
 </mapper>

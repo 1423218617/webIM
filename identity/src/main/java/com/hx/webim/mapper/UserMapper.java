@@ -20,5 +20,6 @@ public interface UserMapper {
     List<FriendList> findFriendGroupsById(Integer uid);
     List<User> findUsersByFriendGroupIds(Integer fgid);
     List<GroupList> findGroupById(Integer uid);
+    List<User> findGroupMembersByGid(Integer gid);
 
 }

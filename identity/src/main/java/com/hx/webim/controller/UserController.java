@@ -5,6 +5,7 @@ import com.hx.webim.Exception.UserException;
 import com.hx.webim.model.domain.FriendAndGroupInfo;
 import com.hx.webim.model.domain.FriendList;
 import com.hx.webim.model.domain.GroupList;
+import com.hx.webim.model.domain.GroupMemberInfo;
 import com.hx.webim.model.pojo.User;
 import com.hx.webim.model.vo.ResultVo;
 import com.hx.webim.service.UserService;
@@ -82,6 +83,18 @@ public class UserController {
         resultVo.setData(friendAndGroupInfo);
         resultVo.setCode(1);
         resultVo.setMsg("ok");
+        return resultVo;
+    }
+
+    @GetMapping("groupMembers/{gid}")
+    public Object groupMembers(@PathVariable Integer gid){
+        List<User> memberList=userService.findGroupMembersByGid(gid);
+        GroupMemberInfo groupMemberInfo=new GroupMemberInfo();
+        groupMemberInfo.setMemberList(memberList);
+        ResultVo resultVo=new ResultVo();
+        resultVo.setCode(200);
+        resultVo.setMsg("群成员信息");
+        resultVo.setData(groupMemberInfo);
         return resultVo;
     }
 }
