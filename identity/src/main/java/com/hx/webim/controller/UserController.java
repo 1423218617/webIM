@@ -9,6 +9,7 @@ import com.hx.webim.model.domain.GroupMemberInfo;
 import com.hx.webim.model.pojo.User;
 import com.hx.webim.model.vo.ResultVo;
 import com.hx.webim.service.UserService;
+import com.hx.webim.socketmessage.WebSocket;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,8 @@ public class UserController {
     @Resource
     private UserService userService;
 
+    @Resource
+    private WebSocket webSocket;
 
     /**
      *
@@ -111,5 +114,12 @@ public class UserController {
         fileOutputStream.write(file.getBytes());
         System.out.println(file.getSize());
         return new ResultVo<>();
+    }
+
+    @GetMapping("socket")
+    @ResponseBody
+    public Object ss(){
+        webSocket.sendMessage("ssssss");
+        return "sss";
     }
 }
