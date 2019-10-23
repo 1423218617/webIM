@@ -2,6 +2,7 @@ package com.hx.webim.controller;
 
 
 import com.hx.webim.Exception.UserException;
+import com.hx.webim.model.TokenModel;
 import com.hx.webim.model.domain.FriendAndGroupInfo;
 import com.hx.webim.model.domain.FriendList;
 import com.hx.webim.model.domain.GroupList;
@@ -10,6 +11,7 @@ import com.hx.webim.model.pojo.User;
 import com.hx.webim.model.vo.ResultVo;
 import com.hx.webim.service.UserService;
 import com.hx.webim.socketmessage.WebSocket;
+import com.hx.webim.util.TokenUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -80,13 +82,18 @@ public class UserController {
     @ResponseBody
     public Object login(User user){
         ResultVo resultVo=new ResultVo();
-        if(!(StringUtils.isBlank(user.getEmail())&&StringUtils.isBlank(user.getPassword()))){
-            resultVo.setCode(1);
-            resultVo.setMsg("账号或密码错误");
+        if(StringUtils.isBlank(user.getEmail())&&StringUtils.isBlank(user.getPassword())){
+            User u=userService.login(user);
+            resultVo.setCode(0);
+            resultVo.setMsg("登陆成功");
+            TokenModel tokenModel= new TokenModel();
+            String t= TokenUtil.create(u);
+            tokenModel.setToken(t);
+            resultVo.setData(tokenModel);
             return resultVo;
         }
-
-        resultVo.setCode(0);
+        resultVo.setCode(1);
+        resultVo.setMsg("账号或密码错误");
         return resultVo;
     }
 
