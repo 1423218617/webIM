@@ -100,4 +100,10 @@ public class UserServiceImpl implements UserService {
     public List<User> findGroupMembersByGid(Integer gid) {
         return userMapper.findGroupMembersByGid(gid);
     }
+
+    @Override
+    public User login(User user) {
+            User u=userMapper.selectUser(user);
+            return u;
+    }
 }

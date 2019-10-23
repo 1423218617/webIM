@@ -1,5 +1,7 @@
 package com.hx.webim.model.vo;
 
+import com.hx.webim.common.ResultEnum;
+
 public class ResultVo<T> {
 
 
@@ -8,6 +10,10 @@ public class ResultVo<T> {
     private T data;
 
 
+    public void setCodeAndMsg(ResultEnum resultEnum){
+        code=resultEnum.getCode();
+        msg=resultEnum.getMessage();
+    }
 
     @Override
     public String toString() {

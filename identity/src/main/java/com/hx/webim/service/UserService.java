@@ -16,4 +16,5 @@ public interface UserService {
     List<FriendList> findFriendGroupsById(Integer uid);
     List<GroupList> findGroupsById(Integer uid);
     List<User> findGroupMembersByGid(Integer gid);
+    User login(User user);
 }

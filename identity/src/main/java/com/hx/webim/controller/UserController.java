@@ -10,6 +10,7 @@ import com.hx.webim.model.pojo.User;
 import com.hx.webim.model.vo.ResultVo;
 import com.hx.webim.service.UserService;
 import com.hx.webim.socketmessage.WebSocket;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -77,8 +78,14 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseBody
-    public Object login(String email,String password){
+    public Object login(User user){
         ResultVo resultVo=new ResultVo();
+        if(!(StringUtils.isBlank(user.getEmail())&&StringUtils.isBlank(user.getPassword()))){
+            resultVo.setCode(1);
+            resultVo.setMsg("账号或密码错误");
+            return resultVo;
+        }
+
         resultVo.setCode(0);
         return resultVo;
     }
