@@ -9,6 +9,7 @@ import com.hx.webim.model.domain.GroupList;
 import com.hx.webim.model.pojo.Group;
 import com.hx.webim.model.pojo.User;
 import com.hx.webim.service.UserService;
+import com.hx.webim.socketmessage.WebSocket;
 import com.hx.webim.util.DateUtil;
 import com.hx.webim.util.MailUtil;
 import com.hx.webim.util.SecurityUtil;
