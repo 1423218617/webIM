@@ -6,7 +6,7 @@
         <title>layim - WebIM</title><link rel="stylesheet" href="static/css/contextMenu.css" />
         <link rel="stylesheet" href="static/layui/css/layui.css">
         <link rel="stylesheet" href="static/css/menu.css">
-        <link href="favicon.ico" type="image/vnd.microsoft.icon" rel="shortcut icon"/>        
+        <link href="favicon.ico" type="image/vnd.microsoft.icon" rel="shortcut icon"/>
     </head>
 <!--    <body data-token="<?php echo $uinfo['id']; ?>" data-rykey="<?php echo $uinfo['easemob_token']; ?>">-->
     <pre style="padding-top: 50px;padding-left: 50px">
@@ -37,29 +37,16 @@
         <script src="static/layui/layui.js"></script>
         <script>
             //layui绑定扩展
-            layui.config({
-                base: 'static/js/'
-            }).extend({
-                socket: 'socket',
-            });
-            layui.use(['layim', 'jquery', 'socket'], function (layim, socket) {
-                var $ = layui.jquery;
-                var socket = layui.socket;
-                var token = $('body').data('token');
-                var rykey = $('body').data('rykey');
-                socket.config({
-                    user: token,
-                    pwd: rykey ,
-                    layim: layim,
-                });
+            layui.use(['layim', 'jquery','req'], function (layim, socket,req) {
+
 
                 layim.config({
                     init: {
-                        url: '/identity/init/121', data: {}
+                        url: '/identity/init/121'
                     },
                     //获取群成员
                     members: {
-                        url: 'class/doAction.php?action=groupMembers', data: {}
+                        url: '/identity/init/groupMembers/1211', data: {}
                     }
                     //上传图片接口
                     , uploadImage: {
@@ -75,8 +62,8 @@
                     ,uploadSkin: {
                         url: 'class/doAction.php?action=uploadSkin'
                         , type: 'post' //默认post
-                    }           
-                    //选择系统皮肤         
+                    }
+                    //选择系统皮肤
                     ,systemSkin: {
                         url: 'class/doAction.php?action=systemSkin'
                         , type: 'post' //默认post
@@ -90,42 +77,42 @@
                     ,findFriendTotal:{
                         url: 'class/doAction.php?action=findFriendTotal'
                         , type: 'get' //默认
-                    }                      
+                    }
                     //查找好友
                     ,findFriend:{
                         url: 'class/doAction.php?action=findFriend'
                         , type: 'get' //默认
-                    }  
+                    }
                     //获取好友资料
                     ,getInformation:{
                         url: 'class/doAction.php?action=getInformation'
                         , type: 'get' //默认
-                    }  
+                    }
                     //保存我的资料
                     ,saveMyInformation:{
                         url: 'class/doAction.php?action=saveMyInformation'
                         , type: 'post' //默认
-                    }                     
+                    }
                     //提交建群信息
                     ,commitGroupInfo:{
                         url: 'class/doAction.php?action=commitGroupInfo'
                         , type: 'get' //默认
-                    }                                       
+                    }
                     //获取系统消息
                     ,getMsgBox:{
                         url: 'class/doAction.php?action=getMsgBox'
                         , type: 'get' //默认post
-                    }                      
+                    }
                     //获取总的记录数
                     ,getChatLogTotal:{
                         url: 'class/doAction.php?action=getChatLogTotal'
                         , type: 'get' //默认post
-                    }                       
+                    }
                     //获取历史记录
                     ,getChatLog:{
                         url: 'class/doAction.php?action=getChatLog'
                         , type: 'get' //默认post
-                    }                                     
+                    }
                     , isAudio: false //开启聊天工具栏音频
                     , isVideo: false //开启聊天工具栏视频
                     , groupMembers: true
@@ -135,7 +122,8 @@
                     //         , title: '代码'
                     //         , icon: '&#xe64e;'
                     //     }]
-                    ,title: 'layim' 
+                    ,title: 'layim' ,
+                    brief: false
                     ,copyright:true
                     , initSkin: '1.jpg' //1-5 设置初始背景
                     , notice: true //是否开启桌面消息提醒，默认false
@@ -145,7 +133,9 @@
                     , chatLog: layui.cache.dir + 'css/modules/layim/html/chatlog.html' //聊天记录页面地址，若不开启，剔除该项即可
                     , createGroup: layui.cache.dir + 'css/modules/layim/html/createGroup.html' //创建群页面地址，若不开启，剔除该项即可
                     , Information: layui.cache.dir + 'css/modules/layim/html/getInformation.html' //好友群资料页面
-                });  
+                });
+                console.log(localStorage.getItem("token"))
             });
-        </script>  
+
+        </script>
 </html>

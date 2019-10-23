@@ -75,6 +75,14 @@ public class UserController {
 
     }
 
+    @PostMapping("/login")
+    @ResponseBody
+    public Object login(String email,String password){
+        ResultVo resultVo=new ResultVo();
+        resultVo.setCode(0);
+        return resultVo;
+    }
+
     @GetMapping("init/{userId}")
     @ResponseBody
     public Object index(@PathVariable String userId){
@@ -89,7 +97,7 @@ public class UserController {
         friendAndGroupInfo.setGroup(group);
         ResultVo<FriendAndGroupInfo> resultVo=new ResultVo();
         resultVo.setData(friendAndGroupInfo);
-        resultVo.setCode(1);
+        resultVo.setCode(0);
         resultVo.setMsg("ok");
         return resultVo;
     }

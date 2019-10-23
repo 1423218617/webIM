@@ -3,12 +3,12 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>LayIM 登陆</title>
-        <link rel="shortcut icon" href="https://tympanus.net/Tutorials/favicon.ico"> 
-        <link rel="stylesheet" type="text/css" href="/static/static/css/login/style3.css">
-		<link rel="stylesheet" type="text/css" href="/static/static/css/login/animate-custom.css">
-		<link rel="stylesheet" href="/static/static/layui/css/layui.css">
-		<script src="/static/static/layui/layui.js"></script>
-	</head>
+        <link rel="shortcut icon" href="https://tympanus.net/Tutorials/favicon.ico">
+		<link rel="stylesheet" href="/static/layui/css/layui.css">
+		<script src="/static/layui/layui.js"></script>
+        <link rel="stylesheet" href="static/css/style3.css">
+        <link rel="stylesheet" href="static/css/animate-custom.css">
+    </head>
     <body>
         <div class="container">
             <header>
@@ -20,7 +20,7 @@
                     <a class="hiddenanchor" id="tologin"></a>
                     <div id="wrapper">
                         <div id="login" class="animate form">
-                            <form action="" autocomplete="on" method="post" class="layui-form" lay-filter="login"> 
+                            <form autocomplete="on"  class="layui-form" lay-filter="login">
                                 <h1>登陆</h1> 
                                 <p> 
                                     <label for="email" class="uname" data-icon="u"> 电子邮件 </label>
@@ -80,7 +80,7 @@
 <script type="text/javascript">
 	layui.use(['layer', 'form', 'jquery'], function(){
 	    //layui组件
-		var layer = layui.layer, form = layui.form(), $ = layui.jquery;
+		var layer = layui.layer, form = layui.form, $ = layui.jquery;
 		//判断用户是否是从激活链接过来的
 		if (location.href.split("?").length == 2){
 			var status = location.href.split("?")[1].split("=")[1];
@@ -148,28 +148,30 @@
 	    });
 	    //登陆
 	    form.on('submit(login)', function (data){
+	        console.log("登录")
 		    var d = {'email': $("#email").val(),'password': $("#password").val()};
 	    	//loading层
 	    	var index = layer.load(1, {
 	    	    shade: [0.6,'#fff'] //0.1透明度的白色背景
 	    	});
 	    	$.ajax({
-	    		url:"user/login",
+	    		url:"/identity/login",
 	    		dataType:"JSON",
 	    		contentType:"application/json",
 	    		type:"POST",
 	    		data:JSON.stringify(d),
 	    		success:function(data) {
-	    			layer.close(login);
+	    		//	layer.close(login);
 	    			if (data.code == 1) {
 	    				layer.msg(data.msg);
 	    				$("#password").val("");
 	    			} else if(data.code == 0) {
 	    				var host = window.location.host;
 	    				if(window.location.port != "") {
+                            localStorage.setItem('token', data.data.token);
 	    					host = host + ":" + window.location.host;
 	    				}
-	    				window.location.href = "http://" + host + "/identity/index";
+	    				window.location.href = "/index.html";
 	    			}
 	    		},
 	    		error:function(data) {
