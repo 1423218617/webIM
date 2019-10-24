@@ -39,7 +39,7 @@
 								</p>
                                 <p class="change_link">
 									还没有账号 ?
-									<a href="/#toregister" class="to_register">加入我们</a>
+									<a href="#toregister" class="to_register">加入我们</a>
 								</p>
                             </form>
                         </div>
@@ -119,6 +119,7 @@
 	    		$("#passwordsignup").val("");
 	    		return false;
 	    	}
+	    	console.log(passwordsignup)
 	    	var d = {
 				'username':$("#usernamesignup").val(),
 				'email':$("#emailsignup").val(),
@@ -136,7 +137,7 @@
 	    		type:"POST",
 	    		data:JSON.stringify(d),
 	    		success:function(data) {
-	    				layer.close(login);
+	    				//layer.close(login);
 	    				layer.msg(data.message + " , 请登录邮箱激活后登陆!");
 	    				//window.location.href = "/#tologin";
 	    		},

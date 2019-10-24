@@ -17,9 +17,11 @@ layui.define(['jquery','layer'],function (exports) {
             url:url,
             type:type||'get',
             data:data||{},
-            beforeSend:function () {
+
+            beforeSend:function (xhr) {
                 if(req.loading) {
                     loading = layer.open({type: 3});
+                    xhr.setRequestHeader("token", localStorage.getItem("token"));
                 }
             },
             success:function (d) {

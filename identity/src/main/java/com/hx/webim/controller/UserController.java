@@ -13,6 +13,8 @@ import com.hx.webim.service.UserService;
 import com.hx.webim.socketmessage.WebSocket;
 import com.hx.webim.util.TokenUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.mail.Multipart;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,6 +32,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/identity")
 public class UserController {
+
+    private final static Logger log= LoggerFactory.getLogger(UserController.class);
 
 
 
@@ -64,9 +69,9 @@ public class UserController {
         User user=new User();
         user.setActive(activeCode);
         if(userService.active(user)){
-             response.sendRedirect("/#tologin?status=1");
+             response.sendRedirect("/login.html#tologin?status=1");
         }
-        return "redirect:/#tologin?status=1";
+        return "redirect:/login.html#tologin?status=1";
     }
 
     @PostMapping("/existEmail")
@@ -80,9 +85,9 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseBody
-    public Object login(User user){
+    public Object login(@RequestBody User user){
         ResultVo resultVo=new ResultVo();
-        if(StringUtils.isBlank(user.getEmail())&&StringUtils.isBlank(user.getPassword())){
+        if(!(StringUtils.isBlank(user.getEmail())&&StringUtils.isBlank(user.getPassword()))){
             User u=userService.login(user);
             resultVo.setCode(0);
             resultVo.setMsg("登陆成功");
@@ -93,16 +98,16 @@ public class UserController {
             return resultVo;
         }
         resultVo.setCode(1);
-        resultVo.setMsg("账号或密码错误");
+        resultVo.setMsg("账号或密码不能为空");
         return resultVo;
     }
 
     @GetMapping("init/{userId}")
     @ResponseBody
-    public Object index(@PathVariable String userId){
+    public Object index(@PathVariable String userId,HttpServletRequest request){
+        System.out.println(request.getHeader("Cookie"));
         Integer id=Integer.parseInt(userId);
         User user= userService.getUserInfoById(id);
-        System.out.println(user);
         List <FriendList> friend=userService.findFriendGroupsById(id);
         FriendAndGroupInfo friendAndGroupInfo=new FriendAndGroupInfo();
         friendAndGroupInfo.setMine(user);

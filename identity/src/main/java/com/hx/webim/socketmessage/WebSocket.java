@@ -48,7 +48,6 @@ public class WebSocket {
             }catch(Exception e) {
                 e.printStackTrace();
             }
-
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.hx.webim.mapper;
 
+import com.hx.webim.common.UserActiveStatusEnum;
 import com.hx.webim.model.pojo.User;
 
 import org.junit.Test;
@@ -13,7 +14,7 @@ import javax.annotation.Resource;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class UserMapperTest {
 
     @Resource
@@ -23,10 +24,11 @@ public class UserMapperTest {
 
         User user=new User();
         user.setUsername("cc");
-        user.setPassword("ss");
-        user.setActive("asdfgh");
-        user.setEmail("asdfghjklktre");
+        user.setPassword("hx");
+        user.setActive("srtyuio");
+        user.setEmail("1432@qq.com");
         user.setCreate_date(1570177634);
+        user.setIs_active(UserActiveStatusEnum.YES.getCode());
         userMapper.insertUser(user);
     }
 

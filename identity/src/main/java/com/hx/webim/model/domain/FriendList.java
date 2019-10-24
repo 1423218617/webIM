@@ -1,12 +1,15 @@
 package com.hx.webim.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hx.webim.model.pojo.User;
 
 import java.util.List;
 
 public class FriendList {
     private Integer id;
+    @JsonProperty("groupname")
     private String group_name;
+    @JsonProperty("list")
     private List<User> userList;
 
     public Integer getId() {

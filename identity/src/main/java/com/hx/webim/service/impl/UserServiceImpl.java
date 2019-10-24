@@ -15,14 +15,19 @@ import com.hx.webim.util.MailUtil;
 import com.hx.webim.util.SecurityUtil;
 import com.hx.webim.util.UUIDUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 
+
 @Service
 public class UserServiceImpl implements UserService {
+
+    private static final Logger log= LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Resource
     private UserMapper userMapper;
@@ -41,7 +46,7 @@ public class UserServiceImpl implements UserService {
         userMapper.insertUser(user);
         MailUtil.sendHtmlMail(user.getEmail(),
                 user.getUsername()+",请确定这是你本人注册的账号   "
-                        +"<a href=http://47.93.51.212:8080/identity/active/"+user.getActive()+">点击激活并登陆</a>");
+                        +"<a href=http://127.0.0.1:8082/identity/active/"+user.getActive()+">点击激活并登陆</a>");
         return true;
     }
 
@@ -104,7 +109,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(User user) {
-            User u=userMapper.selectUser(user);
-            return u;
+        User u=userMapper.selectUser(user);
+        return u;
     }
 }

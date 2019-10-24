@@ -1,11 +1,13 @@
 package com.hx.webim.model.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
 
 public class Group {
     private Integer id;
+    @JsonProperty("groupname")
     private String group_name;
     private String avatar;
     @JsonIgnore

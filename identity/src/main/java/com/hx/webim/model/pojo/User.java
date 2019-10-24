@@ -1,13 +1,13 @@
 package com.hx.webim.model.pojo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class User {
 
 
     private Integer id;
     private String username;
-    @JsonIgnore
     private String password;
     private String sign;
     private String email;
@@ -53,10 +53,12 @@ public class User {
         this.username = username;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }

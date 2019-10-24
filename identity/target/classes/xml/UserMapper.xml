@@ -12,7 +12,6 @@
         select * from t_user where 1=1
         <if test="id!=null">and id=#{id}</if>
         <if test="active!=null">and active=#{active}</if>
-        <if test="password!=null">and password=#{password}</if>
         <if test="email!=null">and email=#{email}</if>
     </select>
     <update id="updateUser" parameterType="com.hx.webim.model.pojo.User" >
