@@ -2,6 +2,7 @@ layui.define(['jquery','layer'],function (exports) {
     var $ = layui.jquery;
     var layer = layui.layer;
 
+
     var req = {
         loading:true,
         get:function (url,data,success,error) {
@@ -10,15 +11,8 @@ layui.define(['jquery','layer'],function (exports) {
         post:function (url,data,success,error) {
             ajax('POST',url,data,success,error)
         },
-        soc:new sock()
+        websocket:new WebSocket("ws://localhost:8082/webSocket")
     };
-     function sock(){
-         this.websocket=new WebSocket("ws://localhost:8082/webSocket")
-         this.websocket.onopen=function () {
-             console.log("建立socket连接")
-         }
-    }
-
 
     var ajax =function(type,url,data,success,error) {
         var loading;
@@ -43,6 +37,21 @@ layui.define(['jquery','layer'],function (exports) {
             }
         });
     }
+
+
+    var websocket = null;
+
+    if('WebSocket' in window){
+        websocket = new WebSocket("ws://localhost:8082/webSocket")
+    }else{
+        alert("该浏览器不支持websocket")
+    }
+
+
+
+
+   
+
 
     exports("req",req);
 })
