@@ -1,12 +1,11 @@
 package com.hx.webim.controller;
 
 
-import com.hx.webim.Exception.UserException;
 import com.hx.webim.model.TokenModel;
-import com.hx.webim.model.domain.FriendAndGroupInfo;
-import com.hx.webim.model.domain.FriendList;
-import com.hx.webim.model.domain.GroupList;
-import com.hx.webim.model.domain.GroupMemberInfo;
+import com.hx.webim.model.vo.FriendAndGroupInfo;
+import com.hx.webim.model.vo.FriendList;
+import com.hx.webim.model.vo.GroupList;
+import com.hx.webim.model.vo.GroupMemberInfo;
 import com.hx.webim.model.pojo.User;
 import com.hx.webim.model.vo.ResultVo;
 import com.hx.webim.service.UserService;
@@ -16,12 +15,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.mail.Multipart;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;

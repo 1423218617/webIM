@@ -141,12 +141,24 @@
                     alert("ready")
                 })
                 layim.on('sendMessage',function (res) {
-                    console.log(res.mine)
-                    console.log(res.to)
-                    alert("sendMessage")
+                    console.log("发送消息，消息类型"+res.to.type)
+                    switch (res.to.type) {
+                        case 'friend':
+                            req.soc.send(JSON.stringify(new message(res)))
+                            break
+                        case 'group':
+                            req.soc.send(JSON.stringify(new message(res)))
+                            break
+                    }
                 })
-            });
 
+               var message=function (res) {
+                   this.from=res.mine.id
+                   this.to=res.to.id
+                   this.type=res.to.type
+                   this.content=res.mine.content
+               }
+            });
 
         </script>
 </html>

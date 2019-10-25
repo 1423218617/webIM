@@ -11,8 +11,18 @@ layui.define(['jquery','layer'],function (exports) {
         post:function (url,data,success,error) {
             ajax('POST',url,data,success,error)
         },
-        websocket:new WebSocket("ws://localhost:8082/webSocket")
+        soc:new sock()
     };
+
+    function sock() {
+        this.socket=new WebSocket("ws://localhost:8082/webSocket")
+        this.socket.onopen=function () {
+            console.log("成功建立socket链接")
+        }
+        this.send=function (data) {
+            this.socket.send(data)
+        }
+    }
 
     var ajax =function(type,url,data,success,error) {
         var loading;
@@ -37,21 +47,5 @@ layui.define(['jquery','layer'],function (exports) {
             }
         });
     }
-
-
-    var websocket = null;
-
-    if('WebSocket' in window){
-        websocket = new WebSocket("ws://localhost:8082/webSocket")
-    }else{
-        alert("该浏览器不支持websocket")
-    }
-
-
-
-
-
-
-
     exports("req",req);
 })

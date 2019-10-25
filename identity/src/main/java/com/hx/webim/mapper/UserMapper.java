@@ -1,12 +1,10 @@
 package com.hx.webim.mapper;
 
 
-import com.hx.webim.model.domain.FriendList;
-import com.hx.webim.model.domain.GroupList;
+import com.hx.webim.model.vo.FriendList;
+import com.hx.webim.model.vo.GroupList;
 import com.hx.webim.model.pojo.User;
-import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 

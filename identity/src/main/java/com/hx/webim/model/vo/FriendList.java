@@ -1,4 +1,4 @@
-package com.hx.webim.model.domain;
+package com.hx.webim.model.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.hx.webim.model.pojo.User;

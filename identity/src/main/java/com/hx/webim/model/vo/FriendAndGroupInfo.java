@@ -1,6 +1,8 @@
-package com.hx.webim.model.domain;
+package com.hx.webim.model.vo;
 
 import com.hx.webim.model.pojo.User;
+import com.hx.webim.model.vo.FriendList;
+import com.hx.webim.model.vo.GroupList;
 
 import java.util.List;
 

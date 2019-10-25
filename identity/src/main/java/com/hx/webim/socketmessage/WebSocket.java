@@ -9,6 +9,8 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import com.hx.webim.model.dto.ChatMessage;
+import com.hx.webim.util.JsonUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -37,6 +39,8 @@ public class WebSocket {
 
     @OnMessage
     public void onMessage(String message) {
+        ChatMessage chatMessage= JsonUtils.stringToObj(message,ChatMessage.class);
+        System.out.println(chatMessage.toString());
         log.info("【websocket消息】收到客户端发来的消息"+message);
     }
 
