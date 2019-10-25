@@ -1,4 +1,4 @@
-package com.hx.webim.socketmessage;
+package com.hx.webim.chatControlller;
 
 
 import java.util.concurrent.CopyOnWriteArraySet;
@@ -17,38 +17,44 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ServerEndpoint("/webSocket")
-public class WebSocket {
-    private static final Logger log= LoggerFactory.getLogger(WebSocket.class);
+public class ChatSocket {
+    private static final Logger log= LoggerFactory.getLogger(ChatSocket.class);
 
     private Session session;
 
-    private static CopyOnWriteArraySet<WebSocket> webSocketSet = new CopyOnWriteArraySet<>();
+    private static CopyOnWriteArraySet<ChatSocket> chatSocketSet = new CopyOnWriteArraySet<>();
 
     @OnOpen
     public void onOpen(Session session) {
         this.session = session;
-        webSocketSet.add(this);
-        log.info("【websocket消息】 有新的连接，总数:"+webSocketSet.size());
+        chatSocketSet.add(this);
+        log.info("【websocket消息】 有新的连接，总数:"+ chatSocketSet.size());
     }
 
     @OnClose
     public void onClose() {
-        webSocketSet.remove(this);
-        log.info("【websocket消息】 连接断开，总数:"+webSocketSet.size());
+        chatSocketSet.remove(this);
+        log.info("【websocket消息】 连接断开，总数:"+ chatSocketSet.size());
     }
 
     @OnMessage
     public void onMessage(String message) {
         ChatMessage chatMessage= JsonUtils.stringToObj(message,ChatMessage.class);
-        System.out.println(chatMessage.toString());
+        if (chatMessage.getType().equals("heartbeat")){
+            ChatMessage heartbeat=new ChatMessage();
+            heartbeat.setType("heartbeat");
+            heartbeat.setContent("服务端发给客户端的心跳包");
+            sendMessage(heartbeat.toString());
+            return;
+        }
         log.info("【websocket消息】收到客户端发来的消息"+message);
     }
 
     public void sendMessage(String message) {
-        for(WebSocket webSocket:webSocketSet) {
+        for(ChatSocket chatSocket : chatSocketSet) {
             System.err.println("【websocket消息】广播消息,message="+message);
             try {
-                webSocket.session.getBasicRemote().sendText(message);
+                chatSocket.session.getBasicRemote().sendText(message);
             }catch(Exception e) {
                 e.printStackTrace();
             }

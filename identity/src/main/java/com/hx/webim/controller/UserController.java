@@ -9,7 +9,7 @@ import com.hx.webim.model.vo.GroupMemberInfo;
 import com.hx.webim.model.pojo.User;
 import com.hx.webim.model.vo.ResultVo;
 import com.hx.webim.service.UserService;
-import com.hx.webim.socketmessage.WebSocket;
+import com.hx.webim.chatControlller.ChatSocket;
 import com.hx.webim.util.TokenUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -38,7 +38,7 @@ public class UserController {
     private UserService userService;
 
     @Resource
-    private WebSocket webSocket;
+    private ChatSocket chatSocket;
 
     /**
      *
@@ -143,7 +143,7 @@ public class UserController {
     @GetMapping("socket")
     @ResponseBody
     public Object ss(){
-        webSocket.sendMessage("ssssss");
+        chatSocket.sendMessage("ssssss");
         return "sss";
     }
 }
