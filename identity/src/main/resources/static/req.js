@@ -10,7 +10,16 @@ layui.define(['jquery','layer'],function (exports) {
         post:function (url,data,success,error) {
             ajax('POST',url,data,success,error)
         },
+        soc:new sock()
     };
+     function sock(){
+         this.websocket=new WebSocket("ws://localhost:8082/webSocket")
+         this.websocket.onopen=function () {
+             console.log("建立socket连接")
+         }
+    }
+
+
     var ajax =function(type,url,data,success,error) {
         var loading;
         $.ajax({
