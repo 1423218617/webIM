@@ -88,11 +88,11 @@ public class ChatSocket {
     @Scheduled(fixedRate=5000)
     private void configureTasks() {
         if (RedisUtil.hasKey(this.uid)){
-            System.out.println("用户在线");
+            log.info("用户在线");
         } else {
             System.out.println("get"+this.uid);
             System.out.println(RedisUtil.get(this.uid));
-            System.out.println("用户不在线");
+            log.info("用户不在线");
         }
     }
 
