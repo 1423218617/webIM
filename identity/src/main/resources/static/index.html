@@ -139,6 +139,13 @@
                 console.log(localStorage.getItem("token"))
                 layim.on('ready',function () {
                     alert("ready")
+                    setInterval(function () {
+                            console.log("发送心跳包")
+                            var m=new message(Object)
+                            m.content=String(Math.round(new Date().getTime()/1000))
+                            m.type='beat'
+                            req.soc.send(JSON.stringify(m))
+                    },3000)
                 })
                 layim.on('sendMessage',function (res) {
                     console.log("发送消息，消息类型"+res.to.type)
@@ -152,11 +159,16 @@
                     }
                 })
 
+
+
                var message=function (res) {
-                   this.from=res.mine.id
-                   this.to=res.to.id
-                   this.type=res.to.type
-                   this.content=res.mine.content
+                    if (res!==Object){
+                        this.from=res.mine.id
+                        this.to=res.to.id
+                        this.type=res.to.type
+                        this.content=res.mine.content
+                    }
+
                }
             });
 

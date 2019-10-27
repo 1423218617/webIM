@@ -18,7 +18,6 @@ layui.define(['jquery','layer'],function (exports) {
         this.socket=new WebSocket("ws://localhost:8082/webSocket")
         this.socket.onopen=function () {
             console.log("成功建立socket链接")
-
         }
         this.send=function (data) {
             this.socket.send(data)
