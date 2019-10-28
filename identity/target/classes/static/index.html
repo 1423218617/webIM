@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="static/css/menu.css">
         <link href="favicon.ico" type="image/vnd.microsoft.icon" rel="shortcut icon"/>
         <script src="req.js"></script>
+        <script src="static/message.js"></script>
     </head>
 <!--    <body data-token="<?php echo $uinfo['id']; ?>" data-rykey="<?php echo $uinfo['easemob_token']; ?>">-->
     <pre style="padding-top: 50px;padding-left: 50px">
@@ -139,12 +140,13 @@
                 console.log(localStorage.getItem("token"))
                 layim.on('ready',function () {
                     alert("ready")
+
                     setInterval(function () {
-                            console.log("发送心跳包")
-                            var m=new message(Object)
-                            m.content=String(Math.round(new Date().getTime()/1000))
-                            m.type='beat'
-                            req.soc.send(JSON.stringify(m))
+                        console.log("发送心跳包")
+                        var m=new message(Object)
+                        m.content=String(Math.round(new Date().getTime()/1000))
+                        m.type='heartbeat'
+                        req.soc.send(JSON.stringify(m))
                     },3000)
                 })
                 layim.on('sendMessage',function (res) {
@@ -157,19 +159,26 @@
                             req.soc.send(JSON.stringify(new message(res)))
                             break
                     }
+
                 })
-
-
-
-               var message=function (res) {
-                    if (res!==Object){
-                        this.from=res.mine.id
-                        this.to=res.to.id
-                        this.type=res.to.type
-                        this.content=res.mine.content
+                req.soc.socket.onmessage=function (e) {
+                    var resmsg=JSON.parse(e.data)
+                    switch(resmsg.type){
+                        case 'heartbeat':
+                            console.log(resmsg.type)
+                            console.log(
+                            )
+                            break
+                        case 'friend':
+                            console.log(resmsg)
+                            layim.getMessage(resmsg);
+                            break
                     }
+                }
 
-               }
+
+
+
             });
 
         </script>

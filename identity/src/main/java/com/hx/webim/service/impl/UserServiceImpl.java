@@ -4,20 +4,21 @@ import com.hx.webim.Exception.UserException;
 import com.hx.webim.common.ExceptionEnum;
 import com.hx.webim.common.UserActiveStatusEnum;
 import com.hx.webim.mapper.UserMapper;
+import com.hx.webim.model.dto.ChatMessage;
+import com.hx.webim.model.dto.UserDto;
 import com.hx.webim.model.vo.FriendList;
 import com.hx.webim.model.vo.GroupList;
 import com.hx.webim.model.pojo.User;
 import com.hx.webim.service.UserService;
-import com.hx.webim.util.DateUtil;
-import com.hx.webim.util.MailUtil;
-import com.hx.webim.util.SecurityUtil;
-import com.hx.webim.util.UUIDUtil;
+import com.hx.webim.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -108,6 +109,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(User user) {
         User u=userMapper.selectUser(user);
+        UserDto userDto=new UserDto();
+        BeanUtils.copyProperties(u,userDto);
+        userDto.setStatus("online");
+        String userDtoString= JsonUtils.objToString(userDto);
+        RedisUtil.set(String.valueOf(userDto.getId()),userDtoString);
         return u;
     }
 }

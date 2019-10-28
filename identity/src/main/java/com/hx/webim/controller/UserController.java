@@ -35,10 +35,11 @@ public class UserController {
 
 
     @Resource
-    private UserService userService;
+    private ChatSocket chatSocket;
 
     @Resource
-    private ChatSocket chatSocket;
+    private UserService userService;
+
 
     /**
      *
@@ -140,10 +141,6 @@ public class UserController {
         return new ResultVo<>();
     }
 
-    @GetMapping("socket")
-    @ResponseBody
-    public Object ss(){
-        chatSocket.sendMessage("ssssss");
-        return "sss";
-    }
+    
+
 }

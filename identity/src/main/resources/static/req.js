@@ -17,11 +17,20 @@ layui.define(['jquery','layer'],function (exports) {
     function sock() {
         this.socket=new WebSocket("ws://localhost:8082/webSocket")
         this.socket.onopen=function () {
+            var token=new message(Object)
+            token.type='token'
+            token.content=localStorage.getItem("token")
+            var m=new message(Object)
+            m.content=String(Math.round(new Date().getTime()/1000))
+            m.type='heartbeat'
+            req.soc.send(JSON.stringify(m))
             console.log("成功建立socket链接")
         }
+
         this.send=function (data) {
             this.socket.send(data)
         }
+
     }
 
     var ajax =function(type,url,data,success,error) {

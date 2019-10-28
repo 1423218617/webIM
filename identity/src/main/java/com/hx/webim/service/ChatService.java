@@ -1,7 +1,8 @@
 package com.hx.webim.service;
 
-import com.hx.webim.model.dto.ChatMessage;
+import com.hx.webim.chatControlller.ChatSocket;
+import com.hx.webim.model.dto.SocketMessage;
 
 public interface ChatService {
-    boolean toFriend(ChatMessage message);
+    boolean toFriend( SocketMessage message);
 }
