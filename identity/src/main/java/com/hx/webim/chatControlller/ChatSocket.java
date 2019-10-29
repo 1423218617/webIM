@@ -2,6 +2,8 @@ package com.hx.webim.chatControlller;
 
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
@@ -13,7 +15,9 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import com.hx.webim.model.TokenModel;
+import com.hx.webim.model.dto.ChatMessage;
 import com.hx.webim.model.dto.SocketMessage;
+import com.hx.webim.model.dto.UserDto;
 import com.hx.webim.model.pojo.User;
 import com.hx.webim.service.ChatService;
 import com.hx.webim.service.UserService;
@@ -56,6 +60,10 @@ public class ChatSocket {
 
     private Integer uid;
 
+    public Integer getUid() {
+        return uid;
+    }
+
     private Session session;
 
     private static ConcurrentHashMap<Integer,ChatSocket> chatSocketMap = new ConcurrentHashMap<>();
@@ -74,7 +82,6 @@ public class ChatSocket {
     @OnClose
     public void onClose() {
         chatSocketMap.remove(uid);
-        RedisUtil.delete(String.valueOf(uid));
         log.info("【websocket消息】 连接断开，总数:"+ chatSocketMap.size());
     }
 
@@ -82,13 +89,26 @@ public class ChatSocket {
     public void onMessage(String message) {
 //        chatService=applicationContext.getBean(ChatService.class);
         SocketMessage socketMessage = JsonUtils.stringToObj(message, SocketMessage.class);
+        System.out.println("socket"+socketMessage.getFrom());
+        log.info("【websocket消息】收到客户端发来的消息"+socketMessage.getType());
         String tokenString=socketMessage.getToken();
         TokenModel tokenModel= TokenUtil.stringToModel(tokenString);
         uid=tokenModel.getUid();
         switch (socketMessage.getType()){
             case "heartbeat":{
+
                 if (!chatSocketMap.containsKey(uid)){
                     chatSocketMap.put(uid,this);
+                    UserDto userDto=JsonUtils.stringToObj(RedisUtil.get(String.valueOf(uid)),UserDto.class);
+                    List<ChatMessage> offlineMessage=userDto.getChatMessageList();
+                    Iterator<ChatMessage> chatMessageIterator=offlineMessage.iterator();
+                    if (offlineMessage.size()!=0){
+                        for (ChatMessage m :
+                                offlineMessage) {
+                            send(JsonUtils.objToString(m));
+                            chatMessageIterator.remove();
+                        }
+                    }
                     log.info("【websocket消息】 有新的连接，总数:"+ chatSocketMap.size());
                     User u=userService.getUserInfoById(uid);
                 }
@@ -102,6 +122,7 @@ public class ChatSocket {
                     e.printStackTrace();
                     log.error("发送消息失败");
                 }
+                break;
             }
             case "friend":{
                 chatService.toFriend(socketMessage);

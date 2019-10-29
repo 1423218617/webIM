@@ -109,11 +109,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(User user) {
         User u=userMapper.selectUser(user);
-        UserDto userDto=new UserDto();
-        BeanUtils.copyProperties(u,userDto);
-        userDto.setStatus("online");
-        String userDtoString= JsonUtils.objToString(userDto);
-        RedisUtil.set(String.valueOf(userDto.getId()),userDtoString);
+        if (!RedisUtil.hasKey(String.valueOf(u.getId()))){
+            UserDto userDto=new UserDto();
+            BeanUtils.copyProperties(u,userDto);
+            userDto.setStatus("online");
+            String userDtoString= JsonUtils.objToString(userDto);
+            RedisUtil.set(String.valueOf(userDto.getId()),userDtoString);
+        }
         return u;
     }
 }

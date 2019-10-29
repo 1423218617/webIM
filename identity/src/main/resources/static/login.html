@@ -169,7 +169,9 @@
 	    			} else if(data.code == 0) {
 	    				var host = window.location.host;
 	    				if(window.location.port != "") {
-                            localStorage.setItem('token', data.data.token);
+                            sessionStorage .setItem('token', data.data.token);
+                            sessionStorage .setItem('id', data.data.uid);
+                            alert(sessionStorage .getItem('id'))
 	    					host = host + ":" + window.location.host;
 	    				}
 	    				window.location.href = "/index.html";

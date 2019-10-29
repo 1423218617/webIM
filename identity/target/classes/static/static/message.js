@@ -5,6 +5,6 @@ var message=function (res) {
         this.type=res.to.type
         this.content=res.mine.content
     }
-    this.token=localStorage.getItem("token")
+    this.token=sessionStorage .getItem("token")
 
 }

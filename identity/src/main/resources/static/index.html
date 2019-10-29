@@ -45,8 +45,9 @@
 
                 layim.config({
                     init: {
-                        url: '/identity/init/121'
-                    },
+                        url: '/identity/init/'+sessionStorage .getItem('id')
+
+            },
                     //获取群成员
                     members: {
                         url: '/identity/init/groupMembers/1211', data: {}
@@ -141,7 +142,7 @@
                 layim.on('ready',function () {
                     alert("ready")
 
-                    setInterval(function () {
+                    setTimeout(function () {
                         console.log("发送心跳包")
                         var m=new message(Object)
                         m.content=String(Math.round(new Date().getTime()/1000))
@@ -163,6 +164,7 @@
                 })
                 req.soc.socket.onmessage=function (e) {
                     var resmsg=JSON.parse(e.data)
+                    console.log(resmsg)
                     switch(resmsg.type){
                         case 'heartbeat':
                             console.log(resmsg.type)

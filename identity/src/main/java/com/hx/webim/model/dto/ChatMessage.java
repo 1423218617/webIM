@@ -2,15 +2,31 @@ package com.hx.webim.model.dto;
 
 public class ChatMessage {
 
+
     private String username;
     private String avatar;
     private Integer id;
     private String type;
     private String content;
     private Integer cid;
-    private String  mine;
+    private boolean  mine;
     private Integer fromid;
     private long timestamp;
+
+    @Override
+    public String toString() {
+        return "ChatMessage{" +
+                "username='" + username + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", id=" + id +
+                ", type='" + type + '\'' +
+                ", content='" + content + '\'' +
+                ", cid=" + cid +
+                ", mine='" + mine + '\'' +
+                ", fromid=" + fromid +
+                ", timestamp=" + timestamp +
+                '}';
+    }
 
     public String getUsername() {
         return username;
@@ -60,11 +76,11 @@ public class ChatMessage {
         this.cid = cid;
     }
 
-    public String getMine() {
+    public boolean isMine() {
         return mine;
     }
 
-    public void setMine(String mine) {
+    public void setMine(boolean mine) {
         this.mine = mine;
     }
 

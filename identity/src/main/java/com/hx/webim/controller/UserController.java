@@ -91,6 +91,7 @@ public class UserController {
             resultVo.setMsg("登陆成功");
             TokenModel tokenModel= new TokenModel();
             String t= TokenUtil.create(u);
+            tokenModel.setUid(u.getId());
             tokenModel.setToken(t);
             resultVo.setData(tokenModel);
             return resultVo;
@@ -103,7 +104,6 @@ public class UserController {
     @GetMapping("init/{userId}")
     @ResponseBody
     public Object index(@PathVariable String userId,HttpServletRequest request){
-        System.out.println(request.getHeader("Cookie"));
         Integer id=Integer.parseInt(userId);
         User user= userService.getUserInfoById(id);
         List <FriendList> friend=userService.findFriendGroupsById(id);

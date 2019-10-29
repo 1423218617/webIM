@@ -1,6 +1,7 @@
 package com.hx.webim.model.dto;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class UserDto {
@@ -15,7 +16,25 @@ public class UserDto {
     private String active;
     private String status;
     private long create_date;
-    private List<ChatMessage> chatMessageList;
+    private List<ChatMessage> chatMessageList=new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", sign='" + sign + '\'' +
+                ", email='" + email + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", sex=" + sex +
+                ", is_active=" + is_active +
+                ", active='" + active + '\'' +
+                ", status='" + status + '\'' +
+                ", create_date=" + create_date +
+                ", chatMessageList=" + chatMessageList +
+                '}';
+    }
 
     public Integer getId() {
         return id;
