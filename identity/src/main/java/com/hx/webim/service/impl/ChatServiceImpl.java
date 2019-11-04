@@ -8,6 +8,7 @@ import com.hx.webim.service.ChatService;
 import com.hx.webim.util.DateUtil;
 import com.hx.webim.util.JsonUtils;
 import com.hx.webim.util.RedisUtil;
+import com.hx.webim.util.UUIDUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,7 +30,7 @@ public class ChatServiceImpl implements ChatService {
             chatMessage.setUsername("cc");
             chatMessage.setTimestamp(DateUtil.getDate()*1000);
             chatMessage.setId(message.getFrom());
-            chatMessage.setCid(8);
+            chatMessage.setCid((int)(Math.random()*100));
             ConcurrentHashMap<Integer,ChatSocket> concurrentHashMap= ChatSocket.getChatSocketMap();
             ChatSocket chatSocket=concurrentHashMap.get(message.getTo());
             if (((chatSocket)!=null)&&(RedisUtil.hasKey(String.valueOf(message.getTo())))){
@@ -41,6 +42,7 @@ public class ChatServiceImpl implements ChatService {
                 List<ChatMessage> chatMessageList=userDto.getChatMessageList();
                 chatMessageList.add(chatMessage);
                 userDto.setChatMessageList(chatMessageList);
+                RedisUtil.set(String.valueOf(toid),JsonUtils.objToString(userDto));
                 return true;
             }
     }

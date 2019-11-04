@@ -89,26 +89,27 @@ public class ChatSocket {
     public void onMessage(String message) {
 //        chatService=applicationContext.getBean(ChatService.class);
         SocketMessage socketMessage = JsonUtils.stringToObj(message, SocketMessage.class);
-        System.out.println("socket"+socketMessage.getFrom());
         log.info("【websocket消息】收到客户端发来的消息"+socketMessage.getType());
         String tokenString=socketMessage.getToken();
         TokenModel tokenModel= TokenUtil.stringToModel(tokenString);
         uid=tokenModel.getUid();
         switch (socketMessage.getType()){
-            case "heartbeat":{
+            case "init": {
 
+            }
+            case "heartbeat":{
                 if (!chatSocketMap.containsKey(uid)){
                     chatSocketMap.put(uid,this);
                     UserDto userDto=JsonUtils.stringToObj(RedisUtil.get(String.valueOf(uid)),UserDto.class);
                     List<ChatMessage> offlineMessage=userDto.getChatMessageList();
                     Iterator<ChatMessage> chatMessageIterator=offlineMessage.iterator();
-                    if (offlineMessage.size()!=0){
-                        for (ChatMessage m :
-                                offlineMessage) {
-                            send(JsonUtils.objToString(m));
-                            chatMessageIterator.remove();
-                        }
+                    ChatMessage m;
+                    while (chatMessageIterator.hasNext()) {
+                        send(JsonUtils.objToString(chatMessageIterator.next()));
+                        chatMessageIterator.remove();
                     }
+                    userDto.setChatMessageList(offlineMessage);
+                    RedisUtil.set(String.valueOf(uid),JsonUtils.objToString(userDto));
                     log.info("【websocket消息】 有新的连接，总数:"+ chatSocketMap.size());
                     User u=userService.getUserInfoById(uid);
                 }

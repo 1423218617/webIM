@@ -12,25 +12,7 @@
     </head>
 <!--    <body data-token="<?php echo $uinfo['id']; ?>" data-rykey="<?php echo $uinfo['easemob_token']; ?>">-->
     <pre style="padding-top: 50px;padding-left: 50px">
-    已实现功能:
-        1.好友/群内的文字、表情、图片、文件 在线/离线消息发送和接收。 
-        2.查看群员列表。 
-        3.面板内快速查找。 
-        4.面板右键自定义事件 
-        5.修改签名
-        6.自定义上传背景皮肤
-        7.搜索好友/群
-        8.添加好友/群
-        9.新建群
-        10.消息盒子展示
-        11.查看/修改个人信息
-        12.实时获取好友在线状态
-        13.挤下线提醒
-        14.文件储存在七牛云
-        15.增删改 好友/好友分组
-        16.群管理（增删管理员/修改群名片/单个群员禁言解除禁言/踢人）
-        体验完整功能请移步<a href="https://github.com/shmilylbelva/webim" style="color: red">这里</a>
-        如果登陆一段时间后接收不到消息，可能是有别的小伙伴登陆了这个账号^_^,点击这里<a href="http://test.guoshanchina.com/login.php" style="color: red">重新登陆</a>即可(还没做退出登陆00……)
+    //TODO
     </pre>        
     </body>
         <script type='text/javascript' src='static/js/webim.config.js'></script>
@@ -40,9 +22,6 @@
         <script>
             //layui绑定扩展
             layui.use(['layim', 'jquery','req'], function (layim, socket,req) {
-                req.get()
-
-
                 layim.config({
                     init: {
                         url: '/identity/init/'+sessionStorage .getItem('id')
@@ -138,10 +117,10 @@
                     , createGroup: layui.cache.dir + 'css/modules/layim/html/createGroup.html' //创建群页面地址，若不开启，剔除该项即可
                     , Information: layui.cache.dir + 'css/modules/layim/html/getInformation.html' //好友群资料页面
                 });
-                console.log(localStorage.getItem("token"))
+                console.log(sessionStorage.getItem("token"))
                 layim.on('ready',function () {
-                    alert("ready")
-
+                    console.log("IM准备完毕")
+                    req.soc.init()
                     setTimeout(function () {
                         console.log("发送心跳包")
                         var m=new message(Object)
@@ -149,6 +128,22 @@
                         m.type='heartbeat'
                         req.soc.send(JSON.stringify(m))
                     },3000)
+
+                    req.soc.socket.onmessage=function (e) {
+                        var resmsg=JSON.parse(e.data)
+                        console.log(resmsg)
+                        switch(resmsg.type){
+                            case 'heartbeat':
+                                console.log(resmsg.type)
+                                console.log(
+                                )
+                                break
+                            case 'friend':
+                                console.log(resmsg)
+                                layim.getMessage(resmsg);
+                                break
+                        }
+                    }
                 })
                 layim.on('sendMessage',function (res) {
                     console.log("发送消息，消息类型"+res.to.type)
@@ -162,21 +157,7 @@
                     }
 
                 })
-                req.soc.socket.onmessage=function (e) {
-                    var resmsg=JSON.parse(e.data)
-                    console.log(resmsg)
-                    switch(resmsg.type){
-                        case 'heartbeat':
-                            console.log(resmsg.type)
-                            console.log(
-                            )
-                            break
-                        case 'friend':
-                            console.log(resmsg)
-                            layim.getMessage(resmsg);
-                            break
-                    }
-                }
+
 
 
 
