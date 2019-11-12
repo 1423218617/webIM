@@ -94,8 +94,17 @@ public class ChatSocket {
         TokenModel tokenModel= TokenUtil.stringToModel(tokenString);
         uid=tokenModel.getUid();
         switch (socketMessage.getType()){
-            case "init": {
-
+            case "ok": {
+                UserDto userDto=JsonUtils.stringToObj(RedisUtil.get(String.valueOf(uid)),UserDto.class);
+                List<ChatMessage> chatMessageList= userDto.getChatMessageList();
+                Iterator<ChatMessage> chatMessageIterator=chatMessageList.iterator();
+                while (chatMessageIterator.hasNext()){
+                    if (chatMessageIterator.next().getTimestamp()==Long.parseLong(socketMessage.getContent())){
+                        chatMessageIterator.remove();
+                    }
+                }
+                userDto.setChatMessageList(chatMessageList);
+                RedisUtil.set(String.valueOf(uid),JsonUtils.objToString(userDto));
             }
             case "heartbeat":{
                 if (!chatSocketMap.containsKey(uid)){
@@ -106,6 +115,7 @@ public class ChatSocket {
                     ChatMessage m;
                     while (chatMessageIterator.hasNext()) {
                         send(JsonUtils.objToString(chatMessageIterator.next()));
+
                         chatMessageIterator.remove();
                     }
                     userDto.setChatMessageList(offlineMessage);
