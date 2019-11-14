@@ -105,6 +105,7 @@ public class ChatSocket {
                 }
                 userDto.setChatMessageList(chatMessageList);
                 RedisUtil.set(String.valueOf(uid),JsonUtils.objToString(userDto));
+                break;
             }
             case "heartbeat":{
                 if (!chatSocketMap.containsKey(uid)){

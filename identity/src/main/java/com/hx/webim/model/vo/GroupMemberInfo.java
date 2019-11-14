@@ -14,4 +14,11 @@ public class GroupMemberInfo {
     public void setMemberList(List<User> memberList) {
         MemberList = memberList;
     }
+
+    @Override
+    public String toString() {
+        return "GroupMemberInfo{" +
+                "MemberList=" + MemberList +
+                '}';
+    }
 }

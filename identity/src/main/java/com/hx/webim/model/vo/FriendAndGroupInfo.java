@@ -34,4 +34,13 @@ public class FriendAndGroupInfo {
     public void setGroup(List<GroupList> group) {
         this.group = group;
     }
+
+    @Override
+    public String toString() {
+        return "FriendAndGroupInfo{" +
+                "mine=" + mine +
+                ", friend=" + friend +
+                ", group=" + group +
+                '}';
+    }
 }

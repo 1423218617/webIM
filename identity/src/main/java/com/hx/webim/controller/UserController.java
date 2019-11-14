@@ -116,6 +116,7 @@ public class UserController {
         resultVo.setData(friendAndGroupInfo);
         resultVo.setCode(0);
         resultVo.setMsg("ok");
+        log.info(resultVo.toString());
         return resultVo;
     }
 

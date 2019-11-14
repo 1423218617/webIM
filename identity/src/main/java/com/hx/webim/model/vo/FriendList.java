@@ -35,4 +35,13 @@ public class FriendList {
     public void setUserList(List<User> userList) {
         this.userList = userList;
     }
+
+    @Override
+    public String toString() {
+        return "FriendList{" +
+                "id=" + id +
+                ", group_name='" + group_name + '\'' +
+                ", userList=" + userList +
+                '}';
+    }
 }

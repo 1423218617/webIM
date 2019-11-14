@@ -144,7 +144,7 @@
                                 var m=new message(Object)
                                 m.content=resmsg.mine.timestamp
                                 m.type='ok'
-                                req.soc.send(m)
+                                req.soc.send(JSON.stringify(m))
                                 break
                         }
                     }
@@ -161,11 +161,6 @@
                     }
 
                 })
-
-
-
-
-
             });
 
         </script>
