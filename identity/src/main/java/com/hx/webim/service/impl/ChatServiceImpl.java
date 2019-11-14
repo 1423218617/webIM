@@ -4,7 +4,9 @@ import com.hx.webim.chatControlller.ChatSocket;
 import com.hx.webim.model.dto.ChatMessage;
 import com.hx.webim.model.dto.SocketMessage;
 import com.hx.webim.model.dto.UserDto;
+import com.hx.webim.model.pojo.User;
 import com.hx.webim.service.ChatService;
+import com.hx.webim.service.UserService;
 import com.hx.webim.util.DateUtil;
 import com.hx.webim.util.JsonUtils;
 import com.hx.webim.util.RedisUtil;
@@ -18,6 +20,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class ChatServiceImpl implements ChatService {
+
+    @Resource
+    private UserService userService;
 
     @Override
     public boolean toFriend(SocketMessage message) {
@@ -45,5 +50,35 @@ public class ChatServiceImpl implements ChatService {
                 RedisUtil.set(String.valueOf(toid),JsonUtils.objToString(userDto));
                 return true;
             }
+    }
+
+    @Override
+    public boolean toGroup(SocketMessage message) {
+        ChatMessage chatMessage=new ChatMessage();
+        chatMessage.setFromid(message.getFrom());
+        chatMessage.setContent(message.getContent());
+        chatMessage.setType(message.getType());
+        chatMessage.setTimestamp(DateUtil.getDate()*1000);
+        chatMessage.setUsername("cc");
+        chatMessage.setId(message.getTo());
+        chatMessage.setAvatar("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2670702686,3423622119&fm=26&gp=0.jpg");
+        chatMessage.setMine(false);
+        List<User> groupMemberList= userService.findGroupMembersByGid(message.getTo());
+        ConcurrentHashMap<Integer,ChatSocket> concurrentHashMap= ChatSocket.getChatSocketMap();
+        groupMemberList.forEach(user -> {
+            if (concurrentHashMap.containsKey(user.getId())&&RedisUtil.hasKey(String.valueOf(message.getTo()))){
+                if (!user.getId().equals(message.getFrom())){
+                    ChatSocket chatSocket= concurrentHashMap.get(user.getId());
+                    chatSocket.send(JsonUtils.objToString(chatMessage));
+                }
+            }else {
+                UserDto userDto=JsonUtils.stringToObj(RedisUtil.get(String.valueOf(user.getId())),UserDto.class);
+                List<ChatMessage> chatMessageList=userDto.getChatMessageList();
+                chatMessageList.add(chatMessage);
+                userDto.setChatMessageList(chatMessageList);
+                RedisUtil.set(String.valueOf(user.getId()),JsonUtils.objToString(userDto));
+            }
+        });
+        return true;
     }
 }

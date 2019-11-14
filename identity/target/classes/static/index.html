@@ -146,6 +146,14 @@
                                 m.type='ok'
                                 req.soc.send(JSON.stringify(m))
                                 break
+                            case 'group':
+                                console.log(resmsg)
+                                layim.getMessage(resmsg)
+                                var m=new message(Object)
+                                m.content=resmsg.mine.timestamp
+                                m.type='ok'
+                                req.soc.send(JSON.stringify(m))
+                                break
                         }
                     }
                 })
@@ -156,6 +164,7 @@
                             req.soc.send(JSON.stringify(new message(res)))
                             break
                         case 'group':
+                            console.log(res)
                             req.soc.send(JSON.stringify(new message(res)))
                             break
                     }

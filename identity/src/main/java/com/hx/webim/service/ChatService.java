@@ -5,4 +5,5 @@ import com.hx.webim.model.dto.SocketMessage;
 
 public interface ChatService {
     boolean toFriend( SocketMessage message);
+    boolean toGroup(SocketMessage message);
 }

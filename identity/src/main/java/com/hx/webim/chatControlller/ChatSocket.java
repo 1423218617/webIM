@@ -89,6 +89,8 @@ public class ChatSocket {
     public void onMessage(String message) {
 //        chatService=applicationContext.getBean(ChatService.class);
         SocketMessage socketMessage = JsonUtils.stringToObj(message, SocketMessage.class);
+
+        log.info("【客户端消息】"+socketMessage.toString());
         log.info("【websocket消息】收到客户端发来的消息"+socketMessage.getType());
         String tokenString=socketMessage.getToken();
         TokenModel tokenModel= TokenUtil.stringToModel(tokenString);
@@ -138,11 +140,12 @@ public class ChatSocket {
             }
             case "friend":{
                 chatService.toFriend(socketMessage);
+                break;
             }
             case "group":
+                chatService.toGroup(socketMessage);
                 break;
         }
-        log.info("【websocket消息】收到客户端发来的消息"+socketMessage.getType());
     }
 
 //    public void sendMessage(String message) {

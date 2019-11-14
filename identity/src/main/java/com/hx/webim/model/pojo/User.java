@@ -3,7 +3,9 @@ package com.hx.webim.model.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 
 
     private Integer id;
