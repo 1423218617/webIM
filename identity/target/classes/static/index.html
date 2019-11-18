@@ -21,7 +21,7 @@
         <script src="static/layui/layui.js"></script>
         <script>
             //layui绑定扩展
-            layui.use(['layim', 'jquery','req'], function (layim, socket,req) {
+            layui.use(['layim', 'jquery','req','socket'], function (layim, socket,req) {
                 layim.config({
                     init: {
                         url: '/identity/init/'+sessionStorage .getItem('id')
@@ -58,12 +58,12 @@
                     }
                     //查找好友总数
                     ,findFriendTotal:{
-                        url: 'class/doAction.php?action=findFriendTotal'
+                        url: '/identity/findFriendTotal'
                         , type: 'get' //默认
                     }
                     //查找好友
                     ,findFriend:{
-                        url: 'class/doAction.php?action=findFriend'
+                        url: '/identity/findFriendTotal'
                         , type: 'get' //默认
                     }
                     //获取好友资料

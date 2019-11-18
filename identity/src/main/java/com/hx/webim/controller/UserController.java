@@ -142,6 +142,12 @@ public class UserController {
         return new ResultVo<>();
     }
 
-    
+    @GetMapping("findFriendTotal")
+    @ResponseBody
+    public Object findFriendTotal(@RequestParam("type") String type,@RequestParam("value") String value,@RequestParam(value = "page",required = false) String page) {
 
+        if(page!=null)
+        return "{'code':'0','msg':'','data':[{'memberIdx':'911058','memberName':'\u848b\u848b','signature':'\u6211\u4e0d\u662f3','birthday':'2017\u5e7412\u670814\u65e5','memberSex':'1'}]}";
+        return "{'code':0,'count':'','data':{'count':'1','limit':'1'}}";
+    }
 }
