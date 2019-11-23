@@ -39,4 +39,7 @@ public class TokenUtil {
 
         return tokenModel;
     }
+    public static Integer getIdByToken(TokenModel tokenModel){
+        return tokenModel.getUid();
+    }
 }

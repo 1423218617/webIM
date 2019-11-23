@@ -2,6 +2,7 @@ package com.hx.webim.controller;
 
 
 import com.hx.webim.model.TokenModel;
+import com.hx.webim.model.pojo.AddMessage;
 import com.hx.webim.model.vo.FriendAndGroupInfo;
 import com.hx.webim.model.vo.FriendList;
 import com.hx.webim.model.vo.GroupList;
@@ -10,6 +11,8 @@ import com.hx.webim.model.pojo.User;
 import com.hx.webim.model.vo.ResultVo;
 import com.hx.webim.service.UserService;
 import com.hx.webim.chatControlller.ChatSocket;
+import com.hx.webim.util.DateUtil;
+import com.hx.webim.util.RequestUtil;
 import com.hx.webim.util.TokenUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -149,5 +152,27 @@ public class UserController {
         if(page!=null)
         return "{'code':'0','msg':'','data':[{'memberIdx':'911058','memberName':'\u848b\u848b','signature':'\u6211\u4e0d\u662f3','birthday':'2017\u5e7412\u670814\u65e5','memberSex':'1'}]}";
         return "{'code':0,'count':'','data':{'count':'1','limit':'1'}}";
+
+    }
+
+    @GetMapping("getRecommend")
+    @ResponseBody
+    public Object getRecommend(){
+        return "{'code':'0','msg':'','data':[{'memberIdx':'911058','memberName':'\u848b\u848b','signature':'\u6211\u4e0d\u662f3','birthday':'2017\u5e7412\u670814\u65e5','memberSex':'1'}]}";
+    }
+
+    @GetMapping("add_msg")
+    public Object add_msg(HttpServletRequest request,@RequestParam Integer to,@RequestParam Integer msgType,@RequestParam String remark,@RequestParam Integer group_id){
+        TokenModel t =RequestUtil.getTokenByRequest(request);
+        Integer uid=TokenUtil.getIdByToken(t);
+        AddMessage addMessage=new AddMessage();
+        addMessage.setFrom_id(uid);
+        addMessage.setTo_uid(to);
+        addMessage.setRemark(remark);
+        addMessage.setType(msgType);
+        addMessage.setAgree(0);
+        addMessage.setGroup_id(group_id);
+        addMessage.setTime(DateUtil.getDate());
+        return null;
     }
 }
