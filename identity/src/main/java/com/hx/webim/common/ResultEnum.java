@@ -3,12 +3,14 @@ package com.hx.webim.common;
 import com.hx.webim.model.vo.ResultVo;
 
 public enum ResultEnum {
+    SUCCESS(0,"success")
     ;
 
 
     private int code;
 
     private String message;
+
 
     ResultEnum(int code,String message){
         this.code=code;

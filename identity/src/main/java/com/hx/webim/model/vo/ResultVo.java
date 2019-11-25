@@ -9,6 +9,14 @@ public class ResultVo<T> {
     private String msg;
     private T data;
 
+    public ResultVo(){
+
+    }
+    public ResultVo(ResultEnum resultEnum) {
+        code=resultEnum.getCode();
+        msg=resultEnum.getMessage();
+    }
+
 
     public void setCodeAndMsg(ResultEnum resultEnum){
         code=resultEnum.getCode();

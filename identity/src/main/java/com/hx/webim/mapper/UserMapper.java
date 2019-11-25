@@ -1,6 +1,7 @@
 package com.hx.webim.mapper;
 
 
+import com.hx.webim.model.pojo.AddMessage;
 import com.hx.webim.model.vo.FriendList;
 import com.hx.webim.model.vo.GroupList;
 import com.hx.webim.model.pojo.User;
@@ -19,5 +20,7 @@ public interface UserMapper {
     List<User> findUsersByFriendGroupIds(Integer fgid);
     List<GroupList> findGroupById(Integer uid);
     List<User> findGroupMembersByGid(Integer gid);
+    void add_msg(AddMessage addMessage);
+    List<AddMessage> get_msg(Integer uid);
 
 }

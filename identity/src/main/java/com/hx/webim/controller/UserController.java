@@ -1,7 +1,9 @@
 package com.hx.webim.controller;
 
 
+import com.hx.webim.common.ResultEnum;
 import com.hx.webim.model.TokenModel;
+import com.hx.webim.model.dto.SystemMessage;
 import com.hx.webim.model.pojo.AddMessage;
 import com.hx.webim.model.vo.FriendAndGroupInfo;
 import com.hx.webim.model.vo.FriendList;
@@ -162,17 +164,30 @@ public class UserController {
     }
 
     @GetMapping("add_msg")
+    @ResponseBody
     public Object add_msg(HttpServletRequest request,@RequestParam Integer to,@RequestParam Integer msgType,@RequestParam String remark,@RequestParam Integer group_id){
         TokenModel t =RequestUtil.getTokenByRequest(request);
         Integer uid=TokenUtil.getIdByToken(t);
         AddMessage addMessage=new AddMessage();
-        addMessage.setFrom_id(uid);
+        addMessage.setFrom_uid(uid);
         addMessage.setTo_uid(to);
         addMessage.setRemark(remark);
         addMessage.setType(msgType);
         addMessage.setAgree(0);
         addMessage.setGroup_id(group_id);
         addMessage.setTime(DateUtil.getDate());
-        return null;
+        userService.add_msg(addMessage);
+        ResultVo resultVo=new ResultVo(ResultEnum.SUCCESS);
+        return resultVo ;
+    }
+
+    @ResponseBody
+    @GetMapping("getMsgBox")
+    public Object getMsgBox(HttpServletRequest request){
+
+        List<SystemMessage> systemMessageList=userService.get_msg(126);
+        ResultVo<List> resultVo=new ResultVo<>(ResultEnum.SUCCESS);
+        resultVo.setData(systemMessageList);
+        return resultVo;
     }
 }

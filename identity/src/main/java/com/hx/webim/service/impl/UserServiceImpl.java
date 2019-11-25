@@ -5,7 +5,9 @@ import com.hx.webim.common.ExceptionEnum;
 import com.hx.webim.common.UserActiveStatusEnum;
 import com.hx.webim.mapper.UserMapper;
 import com.hx.webim.model.dto.ChatMessage;
+import com.hx.webim.model.dto.SystemMessage;
 import com.hx.webim.model.dto.UserDto;
+import com.hx.webim.model.pojo.AddMessage;
 import com.hx.webim.model.vo.FriendList;
 import com.hx.webim.model.vo.GroupList;
 import com.hx.webim.model.pojo.User;
@@ -117,5 +119,22 @@ public class UserServiceImpl implements UserService {
             RedisUtil.set(String.valueOf(userDto.getId()),userDtoString);
         }
         return u;
+    }
+
+    @Override
+    public void add_msg(AddMessage addMessage) {
+        userMapper.add_msg(addMessage);
+    }
+
+    @Override
+    public List<SystemMessage> get_msg(Integer uid) {
+        List<SystemMessage> systemMessageList=new ArrayList<>();
+        List<AddMessage> addMessageList=userMapper.get_msg(uid);
+        addMessageList.forEach(addMessage -> {
+            SystemMessage systemMessage=new SystemMessage();
+            BeanUtils.copyProperties(addMessage,systemMessage);
+            systemMessageList.add(systemMessage);
+        });
+        return systemMessageList;
     }
 }

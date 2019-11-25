@@ -217,7 +217,7 @@ var formatDate = function (now) {
                 parent.layui.im.receiveAddFriendGroup(othis,3);//type 1添加好友 3添加群
             });
         },chat: function(othis){//发起好友聊天
-            var  uid = othis.data('uid'), avatar = "http://test.guoshanchina.com/uploads/person/"+uid+'.jpg';            
+            var  uid = othis.data('uid'), avatar = "http://test.guoshanchina.com/uploads/person/"+uid+'.jpg';
             parent.layui.layim.chat({
                 name: othis.data('name')
                 ,type: othis.data('chattype')

@@ -42,4 +42,11 @@
     <select id="findGroupMembersByGid" resultType="com.hx.webim.model.pojo.User">
         select * from t_user where id in (select uid from t_group_members where gid=#{gid} )
     </select>
+    <insert id="add_msg" parameterType="com.hx.webim.model.pojo.AddMessage">
+        insert into t_add_message(from_uid, to_uid, group_id, remark, agree, type, time)
+        value (#{from_uid},#{to_uid},#{group_id},#{remark},#{agree},#{type},#{time})
+    </insert>
+    <select id="get_msg" parameterType="Integer" resultType="com.hx.webim.model.pojo.AddMessage">
+        select * from t_add_message where from_uid=#{uid} or to_uid=#{uid}
+    </select>
 </mapper>

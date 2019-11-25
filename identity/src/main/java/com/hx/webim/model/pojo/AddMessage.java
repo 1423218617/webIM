@@ -2,7 +2,7 @@ package com.hx.webim.model.pojo;
 
 public class AddMessage {
     private Integer id;
-    private Integer from_id;
+    private Integer from_uid;
     private Integer to_uid;
     private Integer group_id;
     private String remark;
@@ -18,12 +18,12 @@ public class AddMessage {
         this.id = id;
     }
 
-    public Integer getFrom_id() {
-        return from_id;
+    public Integer getFrom_uid() {
+        return from_uid;
     }
 
-    public void setFrom_id(Integer from_id) {
-        this.from_id = from_id;
+    public void setFrom_uid(Integer from_uid) {
+        this.from_uid = from_uid;
     }
 
     public Integer getTo_uid() {
