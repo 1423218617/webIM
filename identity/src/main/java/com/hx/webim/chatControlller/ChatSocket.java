@@ -87,6 +87,7 @@ public class ChatSocket {
 
     @OnMessage
     public void onMessage(String message) {
+        System.out.println(message);
 //        chatService=applicationContext.getBean(ChatService.class);
         SocketMessage socketMessage = JsonUtils.stringToObj(message, SocketMessage.class);
 

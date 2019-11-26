@@ -22,5 +22,4 @@ public interface UserMapper {
     List<User> findGroupMembersByGid(Integer gid);
     void add_msg(AddMessage addMessage);
     List<AddMessage> get_msg(Integer uid);
-
 }

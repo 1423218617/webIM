@@ -11,6 +11,7 @@ import com.hx.webim.model.pojo.AddMessage;
 import com.hx.webim.model.vo.FriendList;
 import com.hx.webim.model.vo.GroupList;
 import com.hx.webim.model.pojo.User;
+import com.hx.webim.model.vo.PageResultVo;
 import com.hx.webim.service.UserService;
 import com.hx.webim.util.*;
 import org.apache.commons.lang3.StringUtils;
@@ -47,7 +48,7 @@ public class UserServiceImpl implements UserService {
         userMapper.insertUser(user);
         MailUtil.sendHtmlMail(user.getEmail(),
                 user.getUsername()+",请确定这是你本人注册的账号   "
-                        +"<a href=http://127.0.0.1:8082/identity/active/"+user.getActive()+">点击激活并登陆</a>");
+                        +"<a href=http=//127.0.0.1=8082/identity/active/"+user.getActive()+">点击激活并登陆</a>");
         return true;
     }
 
@@ -129,12 +130,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<SystemMessage> get_msg(Integer uid) {
         List<SystemMessage> systemMessageList=new ArrayList<>();
-        List<AddMessage> addMessageList=userMapper.get_msg(uid);
+     /*   List<AddMessage> addMessageList=userMapper.get_msg(uid);
         addMessageList.forEach(addMessage -> {
             SystemMessage systemMessage=new SystemMessage();
             BeanUtils.copyProperties(addMessage,systemMessage);
             systemMessageList.add(systemMessage);
-        });
+        });*/
+        String a="{\"msgIdx\":\"674\",\"msgType\":\"1\",\"from\":\"911088\",\"to\":\"1570845\",\"status\":\"1\",\"remark\":\"\",\"sendTime\":\"1574672286\",\"readTime\":\"1574510341\",\"time\":\"1574672286\",\"adminGroup\":\"0\",\"handle\":null,\"mygroupIdx\":null,\"username\":\"\u5468\u4e8c\",\"signature\":\"\"}";
+        SystemMessage systemMessage=JsonUtils.stringToObj(a,SystemMessage.class);
+        systemMessageList.add(systemMessage);
+
         return systemMessageList;
+
+
     }
 }

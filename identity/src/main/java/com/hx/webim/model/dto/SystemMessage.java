@@ -3,58 +3,59 @@ package com.hx.webim.model.dto;
 public class SystemMessage {
 
 
-    private Integer msgIdx;
-    private Integer msgType;
-    private Integer from;
-    private Integer to;
-    private Integer status;
+    private String msgIdx;
+    private String msgType;
+    private String from;
+    private String to;
+    private String status;
     private String remark;
-    private long sendTime;
-    private long readTime;
-    private long time;
-    private Integer adminGroup;
+    private String sendTime;
+    private String readTime;
+    private String time;
+    private String adminGroup;
     private String handle;
-    private Integer mygroupIdx;
+    private String mygroupIdx;
     private String username;
     private String signature;
 
-    public Integer getMsgIdx() {
+
+    public String getMsgIdx() {
         return msgIdx;
     }
 
-    public void setMsgIdx(Integer msgIdx) {
+    public void setMsgIdx(String msgIdx) {
         this.msgIdx = msgIdx;
     }
 
-    public Integer getMsgType() {
+    public String getMsgType() {
         return msgType;
     }
 
-    public void setMsgType(Integer msgType) {
+    public void setMsgType(String msgType) {
         this.msgType = msgType;
     }
 
-    public Integer getFrom() {
+    public String getFrom() {
         return from;
     }
 
-    public void setFrom(Integer from) {
+    public void setFrom(String from) {
         this.from = from;
     }
 
-    public Integer getTo() {
+    public String getTo() {
         return to;
     }
 
-    public void setTo(Integer to) {
+    public void setTo(String to) {
         this.to = to;
     }
 
-    public Integer getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -66,35 +67,35 @@ public class SystemMessage {
         this.remark = remark;
     }
 
-    public long getSendTime() {
+    public String getSendTime() {
         return sendTime;
     }
 
-    public void setSendTime(long sendTime) {
+    public void setSendTime(String sendTime) {
         this.sendTime = sendTime;
     }
 
-    public long getReadTime() {
+    public String getReadTime() {
         return readTime;
     }
 
-    public void setReadTime(long readTime) {
+    public void setReadTime(String readTime) {
         this.readTime = readTime;
     }
 
-    public long getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(long time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
-    public Integer getAdminGroup() {
+    public String getAdminGroup() {
         return adminGroup;
     }
 
-    public void setAdminGroup(Integer adminGroup) {
+    public void setAdminGroup(String adminGroup) {
         this.adminGroup = adminGroup;
     }
 
@@ -106,11 +107,11 @@ public class SystemMessage {
         this.handle = handle;
     }
 
-    public Integer getMygroupIdx() {
+    public String getMygroupIdx() {
         return mygroupIdx;
     }
 
-    public void setMygroupIdx(Integer mygroupIdx) {
+    public void setMygroupIdx(String mygroupIdx) {
         this.mygroupIdx = mygroupIdx;
     }
 

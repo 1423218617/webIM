@@ -229,7 +229,7 @@ var formatDate = function (now) {
     };
     //打开页面即把系统消息标记为已读
     $(function(){  
-        $.get('../../../../../../class/doAction.php?action=set_allread', {}, function (res) {
+        $.get('/identity/set_allread', {}, function (res) {
         });       
     });  
     $('body').on('click', '.layui-btn', function () {

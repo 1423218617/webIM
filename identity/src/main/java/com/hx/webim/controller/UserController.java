@@ -5,15 +5,12 @@ import com.hx.webim.common.ResultEnum;
 import com.hx.webim.model.TokenModel;
 import com.hx.webim.model.dto.SystemMessage;
 import com.hx.webim.model.pojo.AddMessage;
-import com.hx.webim.model.vo.FriendAndGroupInfo;
-import com.hx.webim.model.vo.FriendList;
-import com.hx.webim.model.vo.GroupList;
-import com.hx.webim.model.vo.GroupMemberInfo;
+import com.hx.webim.model.vo.*;
 import com.hx.webim.model.pojo.User;
-import com.hx.webim.model.vo.ResultVo;
 import com.hx.webim.service.UserService;
 import com.hx.webim.chatControlller.ChatSocket;
 import com.hx.webim.util.DateUtil;
+import com.hx.webim.util.JsonUtils;
 import com.hx.webim.util.RequestUtil;
 import com.hx.webim.util.TokenUtil;
 import org.apache.commons.lang3.StringUtils;
@@ -186,8 +183,18 @@ public class UserController {
     public Object getMsgBox(HttpServletRequest request){
 
         List<SystemMessage> systemMessageList=userService.get_msg(126);
-        ResultVo<List> resultVo=new ResultVo<>(ResultEnum.SUCCESS);
-        resultVo.setData(systemMessageList);
-        return resultVo;
+        PageResultVo pageResultVo=new PageResultVo();
+        pageResultVo.setCode(0);
+        pageResultVo.setPages(1);
+        pageResultVo.setData(systemMessageList);
+        String a= "{\"code\":0,\"pages\":1,\"data\":[{\"msgIdx\":\"674\",\"msgType\":\"1\",\"from\":\"911088\",\"to\":\"1570845\",\"status\":\"1\",\"remark\":\"\",\"sendTime\":\"1574743527\",\"readTime\":\"1574510341\",\"time\":\"1574743527\",\"adminGroup\":\"0\",\"handle\":null,\"mygroupIdx\":null,\"username\":\"\u5468\u4e8c\",\"signature\":\"\"},{\"msgIdx\":\"622\",\"msgType\":\"1\",\"from\":\"1570845\",\"to\":\"911117\",\"status\":\"1\",\"remark\":\"ee\",\"sendTime\":\"1574510483\",\"readTime\":\"1574385415\",\"time\":\"1574510483\",\"adminGroup\":\"0\",\"handle\":null,\"mygroupIdx\":\"2\",\"username\":\"\u56de\u7738\",\"signature\":\"\u89c4\u5212\u6cd5\"},{\"msgIdx\":\"687\",\"msgType\":\"2\",\"from\":\"911085\",\"to\":\"1570845\",\"status\":\"2\",\"remark\":\"\",\"sendTime\":\"1573884999\",\"readTime\":\"1574510352\",\"time\":\"1574510352\",\"adminGroup\":\"0\",\"handle\":null,\"mygroupIdx\":null,\"username\":\"13275877535\",\"signature\":\"\"},{\"msgIdx\":\"685\",\"msgType\":\"2\",\"from\":\"1570845\",\"to\":\"911100\",\"status\":\"4\",\"remark\":\"\",\"sendTime\":\"1573543104\",\"readTime\":\"1573807928\",\"time\":\"1573807928\",\"adminGroup\":\"0\",\"handle\":null,\"mygroupIdx\":\"2\",\"username\":\"\u5927\u660e0\",\"signature\":\"fdhfghgbfdhb\"},{\"msgIdx\":\"669\",\"msgType\":\"2\",\"from\":\"1570845\",\"to\":\"911085\",\"status\":\"4\",\"remark\":\"\ucc29\ud55c\uce5c\uad6c\",\"sendTime\":\"1571992313\",\"readTime\":\"1572349077\",\"time\":\"1572349077\",\"adminGroup\":\"0\",\"handle\":null,\"mygroupIdx\":\"2\",\"username\":\"13275877535\",\"signature\":\"\"},{\"msgIdx\":\"666\",\"msgType\":\"2\",\"from\":\"1570845\",\"to\":\"911067\",\"status\":\"4\",\"remark\":\"\",\"sendTime\":\"1571990701\",\"readTime\":\"1572312173\",\"time\":\"1572312173\",\"adminGroup\":\"0\",\"handle\":null,\"mygroupIdx\":\"2\",\"username\":\"\u674e\u98dea\",\"signature\":\"\u674e\u98de\u554a\"},{\"msgIdx\":\"667\",\"msgType\":\"2\",\"from\":\"1570845\",\"to\":\"1570855\",\"status\":\"4\",\"remark\":\"\",\"sendTime\":\"1571990754\",\"readTime\":\"1572256901\",\"time\":\"1572256901\",\"adminGroup\":\"0\",\"handle\":null,\"mygroupIdx\":\"2\",\"username\":\"222222222\",\"signature\":\"\u8428\u6253\u626b\u7684\u963f\u745f\u7fa4\u7fc1\u7fa4\"},{\"msgIdx\":\"670\",\"msgType\":\"2\",\"from\":\"1570845\",\"to\":\"911058\",\"status\":\"4\",\"remark\":\"abc\",\"sendTime\":\"1571992329\",\"readTime\":\"1571992349\",\"time\":\"1571992349\",\"adminGroup\":\"0\",\"handle\":null,\"mygroupIdx\":\"2\",\"username\":\"\u848b\u848b\",\"signature\":\"\u6211\u4e0d\u662f3\"},{\"msgIdx\":\"592\",\"msgType\":\"3\",\"from\":\"1570845\",\"to\":\"37905088184321\",\"status\":\"1\",\"remark\":\"\",\"sendTime\":\"1563541072\",\"readTime\":null,\"time\":\"1563541072\",\"adminGroup\":\"0\",\"handle\":null,\"mygroupIdx\":null,\"groupName\":\"111111\",\"groupIdx\":\"37905088184321\",\"username\":\"\ud55c\uae00\ub098\ub77c\",\"signature\":\"111111112\"},{\"msgIdx\":\"79\",\"msgType\":\"1\",\"from\":\"1570845\",\"to\":\"1570845\",\"status\":\"1\",\"remark\":\"\",\"sendTime\":\"1542173072\",\"readTime\":null,\"time\":\"1542173072\",\"adminGroup\":\"0\",\"handle\":null,\"mygroupIdx\":\"324\",\"username\":\"\ud55c\uae00\ub098\ub77c\",\"signature\":\"111111112\"}],\"memberIdx\":\"1570845\"}";
+        PageResultVo pageResultVo1= JsonUtils.stringToObj(a,PageResultVo.class);
+        return JsonUtils.objToString(pageResultVo1);
+    }
+
+    @ResponseBody
+    @GetMapping("set_allread")
+    public Object set_allread(){
+        return new ResultVo<>(ResultEnum.SUCCESS);
     }
 }
