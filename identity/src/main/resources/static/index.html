@@ -21,7 +21,22 @@
         <script src="static/layui/layui.js"></script>
         <script>
             //layui绑定扩展
+            layui.config({
+                base: 'static/js/'
+            }).extend({
+                socket: 'socket',
+            });
             layui.use(['layim', 'jquery','req','socket'], function (layim, socket,req) {
+                var $ = layui.jquery;
+                var socket = layui.socket;
+                var token = $('body').data('token');
+                var rykey = $('body').data('rykey');
+                socket.config({
+                    user: token,
+                    pwd: rykey ,
+                    layim: layim,
+                });
+
                 layim.config({
                     init: {
                         url: '/identity/init/'+sessionStorage .getItem('id')

@@ -1294,7 +1294,7 @@ window.layui && layui.define ? (
     exports('layer', layer);
   })
 ) : (
-  (typeof define === 'function' && define.amd) ? define(['static/static/layui/lay/modules/jquery'], function(){ //requirejs加载
+  (typeof define === 'function' && define.amd) ? define(['jquery'], function(){ //requirejs加载
     ready.run(window.jQuery);
     return layer;
   }) : function(){ //普通script标签加载

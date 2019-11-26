@@ -252,7 +252,7 @@
                       skin: 'layui-layer-molv' //样式类名
                       ,closeBtn: 0
                     }, function(){
-                        window.location.href = 'login.php';
+                        window.location.href = 'login.html';
                     });
                 },         //连接关闭回调
                 onTextMessage: function ( message ) {

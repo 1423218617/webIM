@@ -141,9 +141,9 @@
         <!-- 
         上述模版采用了 laytpl 语法，不了解的同学可以去看下文档：http://www.layui.com/doc/modules/laytpl.html 
         -->
-<script type='text/javascript' src='../../../../../js/webim.config.js'></script>
-<script type='text/javascript' src='../../../../../js/strophe-1.2.8.min.js'></script>
-<script type='text/javascript' src='../../../../../js/websdk-1.4.13.js'></script>
+<script type='text/javascript' src='../../../../../../static/js/webim.config.js'></script>
+<script type='text/javascript' src='../../../../../../static/js/strophe-1.2.8.min.js'></script>
+<script type='text/javascript' src='../../../../../../static/js/websdk-1.4.13.js'></script>         
         <script src="../../../../layui.js"></script>
         <script>
 layui.config({
@@ -217,7 +217,7 @@ var formatDate = function (now) {
                 parent.layui.im.receiveAddFriendGroup(othis,3);//type 1添加好友 3添加群
             });
         },chat: function(othis){//发起好友聊天
-            var  uid = othis.data('uid'), avatar = "http://test.guoshanchina.com/uploads/person/"+uid+'.jpg';
+            var  uid = othis.data('uid'), avatar = "http://test.guoshanchina.com/uploads/person/"+uid+'.jpg';            
             parent.layui.layim.chat({
                 name: othis.data('name')
                 ,type: othis.data('chattype')
