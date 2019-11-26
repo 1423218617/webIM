@@ -3,7 +3,7 @@
     var $ = layui.jquery;
     var layer = layui.layer;
     var form = layui.form;
-    var cachedata =  layui.layim.cache(); 
+    var cachedata =  layui.layim.cache();
 
     var conf = {
         uid: 0, //
@@ -709,7 +709,7 @@
                     layui.each(item1.list, function(index, item){
                         if (item.id == uid) {isAdd = true;}//是否已经是好友
                     });
-                });                
+                });
             }else{
                 var default_avatar = './uploads/person/empty1.jpg';
                 for (i in cachedata.group)//是否已经加群
@@ -727,18 +727,24 @@
                 ,type: type
                 ,submit: function(group,remark,index){//确认发送添加请求
                     if (type == 'friend') {
-                        $.get('class/doAction.php?action=add_msg', {to: uid,msgType:1,remark:remark,mygroupIdx:group}, function (res) {
+                        $.ajax({
+                            url:"/identity/add_msg",
+                            data:{to: uid,msgType:1,remark:remark,group_id:group},
+                            beforeSend:function (xhr) {
+                                    xhr.setRequestHeader("token", sessionStorage .getItem("token"));
+                            },
+                            success:function (res) {
                             var data = eval('(' + res + ')');
                             if (data.code == 0) {
                                 conn.subscribe({
                                     to: uid,
-                                    message: remark  
-                                });                            
+                                    message: remark
+                                });
                                 layer.msg('你申请添加'+name+'为好友的消息已发送。请等待对方确认');
                             }else{
                                 layer.msg('你申请添加'+name+'为好友的消息发送失败。请刷新浏览器后重试');
                             }
-                        });
+                        },});
                     }else{
                         var options = {
                             groupId: uid,
@@ -746,16 +752,16 @@
                                 if (approval == '1') {
                                     $.get('class/doAction.php?action=add_msg', {to: uid,msgType:3,remark:remark}, function (res) {
                                         var data = eval('(' + res + ')');
-                                        if (data.code == 0) {                        
+                                        if (data.code == 0) {
                                             layer.msg('你申请加入'+name+'的消息已发送。请等待管理员确认');
                                         }else{
                                             layer.msg('你申请加入'+name+'的消息发送失败。请刷新浏览器后重试');
                                         }
-                                    });                                      
-                                    
+                                    });
+
                                 }else{
                                     layer.msg('你已加入 '+name+' 群');
-                                } 
+                                }
                             },
                             error: function(e) {
                                 if(e.type == 17){
@@ -763,12 +769,12 @@
                                 }
                             }
                         };
-                        conn.joinGroup(options);                           
+                        conn.joinGroup(options);
                     }
                 },function(){
                     layer.close(index);
                 }
-            });            
+            });
 
         },
         receiveAddFriendGroup:function(othis,agree){//确认添加好友或群
