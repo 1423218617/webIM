@@ -23,6 +23,7 @@
         <if test="is_active!=null">is_active=#{is_active},</if>
         <if test="avatar!=null">avatar=#{avatar},</if>
         <if test="status!=null">status=#{status}</if>
+        where id=#{id}
 
     </update>
     <select id="UserAllEmail" resultType="String">
@@ -48,5 +49,17 @@
     </insert>
     <select id="get_msg" parameterType="Integer" resultType="com.hx.webim.model.pojo.AddMessage">
         select * from t_add_message where from_uid=#{uid} or to_uid=#{uid}
+    </select>
+    <update id="updateAddMessage">
+        update t_add_message set
+        <if test="agree!=null">agree=#{agree},</if>
+        <if test="type!=null">type=#{type}</if>
+        where id=#{msgIdx}
+    </update>
+    <insert id="insertFriendAndFriend">
+        insert into t_friend_group_friends values (#{from_uid},#{group_id},#{to_uid})
+    </insert>
+    <select id="selectAddMessageById" resultType="com.hx.webim.model.pojo.AddMessage">
+        select * from t_add_message where id=#{id}
     </select>
 </mapper>

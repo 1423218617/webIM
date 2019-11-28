@@ -73,4 +73,18 @@ public class AddMessage {
     public void setTime(Long time) {
         this.time = time;
     }
+
+    @Override
+    public String toString() {
+        return "AddMessage{" +
+                "id=" + id +
+                ", from_uid=" + from_uid +
+                ", to_uid=" + to_uid +
+                ", group_id=" + group_id +
+                ", remark='" + remark + '\'' +
+                ", agree=" + agree +
+                ", type=" + type +
+                ", time=" + time +
+                '}';
+    }
 }

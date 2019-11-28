@@ -21,4 +21,5 @@ public interface UserService {
     User login(User user);
     void add_msg(AddMessage addMessage);
     List<SystemMessage> get_msg(Integer uid);
+    boolean modify_msg(Integer msgIdx,Integer msgType,Integer status,Integer mygroupIdx,Integer friendIdx,Integer uid);
 }

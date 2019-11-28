@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -130,18 +131,33 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<SystemMessage> get_msg(Integer uid) {
         List<SystemMessage> systemMessageList=new ArrayList<>();
-     /*   List<AddMessage> addMessageList=userMapper.get_msg(uid);
+        List<AddMessage> addMessageList=userMapper.get_msg(uid);
         addMessageList.forEach(addMessage -> {
             SystemMessage systemMessage=new SystemMessage();
-            BeanUtils.copyProperties(addMessage,systemMessage);
+            systemMessage.setFrom(uid);
+            systemMessage.setTo(addMessage.getTo_uid());
+            systemMessage.setMsgType(addMessage.getType());
+            systemMessage.setTime(addMessage.getTime());
+            systemMessage.setStatus(addMessage.getAgree());
             systemMessageList.add(systemMessage);
-        });*/
-        String a="{\"msgIdx\":\"674\",\"msgType\":\"1\",\"from\":\"911088\",\"to\":\"1570845\",\"status\":\"1\",\"remark\":\"\",\"sendTime\":\"1574672286\",\"readTime\":\"1574510341\",\"time\":\"1574672286\",\"adminGroup\":\"0\",\"handle\":null,\"mygroupIdx\":null,\"username\":\"\u5468\u4e8c\",\"signature\":\"\"}";
+
+        });
+        /*String a="{\"msgIdx\":\"674\",\"msgType\":\"1\",\"from\":\"911088\",\"to\":\"1570845\",\"status\":\"1\",\"remark\":\"\",\"sendTime\":\"1574672286\",\"readTime\":\"1574510341\",\"time\":\"1574672286\",\"adminGroup\":\"0\",\"handle\":null,\"mygroupIdx\":null,\"username\":\"\u5468\u4e8c\",\"signature\":\"\"}";
         SystemMessage systemMessage=JsonUtils.stringToObj(a,SystemMessage.class);
-        systemMessageList.add(systemMessage);
+        systemMessageList.add(systemMessage);*/
 
         return systemMessageList;
 
 
+    }
+
+    @Transactional
+    @Override
+    public boolean modify_msg(Integer msgIdx, Integer msgType, Integer status, Integer mygroupIdx, Integer friendIdx,Integer uid) {
+        userMapper.updateAddMessage(status,msgType,msgIdx);
+        userMapper.insertFriendAndFriend(uid,mygroupIdx,friendIdx);
+        AddMessage addMessage=userMapper.selectAddMessageById(msgIdx);
+        userMapper.insertFriendAndFriend(addMessage.getFrom_uid(),addMessage.getGroup_id(),addMessage.getTo_uid());
+        return true;
     }
 }

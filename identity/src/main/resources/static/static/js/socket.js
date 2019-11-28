@@ -727,7 +727,7 @@
                 ,type: type
                 ,submit: function(group,remark,index){//确认发送添加请求
                     if (type == 'friend') {
-                        $.get("/identity/add_msg", {to: uid,msgType:1,remark:remark,group_id:group}, function (res) {
+                        $.get("/identity/add_msg", {to: uid,msgType:1,remark:remark,mygroupIdx:group}, function (res) {
                             var data = eval('(' + res + ')');
                             if (data.code == 0) {
                                 conn.subscribe({
@@ -797,7 +797,7 @@
                         , avatar: im['IsExist'].call(this, avatar)?avatar:default_avatar
                         , group: cachedata.friend || [] //获取好友分组数据
                         , submit: function (group, index) { 
-                            $.get('class/doAction.php?action=modify_msg', {msgIdx: msgIdx,msgType:msgType,status:status,mygroupIdx:group,friendIdx:uid}, function (res) {
+                            $.get('/identity/modify_msg', {msgIdx: msgIdx,msgType:msgType,status:status,mygroupIdx:group,friendIdx:uid}, function (res) {
                                 var data = eval('(' + res + ')');
                                 if (data.code == 0) {
                                     //将好友 追加到主面板
@@ -865,7 +865,6 @@
                         }
                     });                    
                 }
-
             }else{              
                 $.get('class/doAction.php?action=modify_msg', {msgIdx: msgIdx,msgType:msgType,status:status}, function (res) {
                     var data = eval('(' + res + ')');
@@ -877,10 +876,8 @@
                         othis.parent().html('<em>已拒绝</em>');                        
                     }
                     layer.close(layer.index);
-                });                
-
+                });
             }
-
         },
         //创建群
         createGroup: function(othis){

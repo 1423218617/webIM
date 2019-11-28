@@ -38,4 +38,19 @@ public class UserMapperTest {
     public void findGroupById() {
         System.out.println(userMapper.findGroupById(121));
     }
+
+    @Test
+    public void updateAddMessage() {
+        userMapper.updateAddMessage(1,1,13);
+    }
+
+    @Test
+    public void insertFriendAndFriend() {
+        userMapper.insertFriendAndFriend(333,444,555);
+    }
+
+    @Test
+    public void selectAddMessageById() {
+        System.out.println(userMapper.selectAddMessageById(13));
+    }
 }

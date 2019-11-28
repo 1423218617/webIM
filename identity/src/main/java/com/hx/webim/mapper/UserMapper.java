@@ -22,4 +22,7 @@ public interface UserMapper {
     List<User> findGroupMembersByGid(Integer gid);
     void add_msg(AddMessage addMessage);
     List<AddMessage> get_msg(Integer uid);
+    void updateAddMessage(Integer agree,Integer type,Integer msgIdx);
+    void insertFriendAndFriend(Integer from_uid,Integer group_id,Integer to_uid);
+    AddMessage selectAddMessageById(Integer id);
 }
