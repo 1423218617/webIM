@@ -28,7 +28,7 @@
                     {{# if(item.from == d.memberIdx){ }}
                         <li data-uid="{{ item.to }}">
                           <a href="javascript:void(0);" target="_blank">
-                            <img src="http://test.guoshanchina.com/uploads/person/{{ item.to }}.jpg" class="layui-circle layim-msgbox-avatar" onerror="javascript:this.src='../../../../../../uploads/person/{{# if(item.msgType == 1){ }}empty2.jpg{{# }else{ }}empty1.jpg{{# } }} '">
+                            <img src="http://test.guoshanchina.com/uploads/person/{{ item.to }}.jpg" class="layui-circle layim-msgbox-avatar" onerror="javascript:this.src='https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2670702686,3423622119&fm=26&gp=0.jpg">
                           </a>
                           <p class="layim-msgbox-user">
                             <a href="javascript:void(0);" target="_blank"><b>{{ item.groupName||'' }}</b></a>
@@ -49,7 +49,7 @@
                     {{# }else{ }}
                         <li data-uid="{{ item.from }}" data-id="{{ item.msgIdx }}" data-type="{{item.msgType}}" data-name="{{ item.username }}" {{# if(item.groupIdx){ }} data-groupidx="{{ item.groupIdx||'' }}"  data-group="{{ item.groupName||'' }}" {{#} }} data-signature="{{ item.signature }}">
                           <a href="javascript:void(0);" target="_blank">
-                            <img src="http://test.guoshanchina.com/uploads/person/{{ item.from }}.jpg" class="layui-circle layim-msgbox-avatar" onerror="javascript:this.src='../../../../../../uploads/person/{{# if(item.msgType == 1){ }}empty2.jpg{{# }else{ }}empty1.jpg{{# } }} '">
+                            <img src="http://test.guoshanchina.com/uploads/person/{{ item.from }}.jpg" class="layui-circle layim-msgbox-avatar" onerror="javascript:this.src='https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2670702686,3423622119&fm=26&gp=0.jpg">
                           </a>
                           <p class="layim-msgbox-user">
                             <a href="javascript:void(0);" target="_blank"><b>{{ item.username||'' }}</b></a>
@@ -84,7 +84,7 @@
                     {{# }else{ }}
                         <li>
                           <a href="javascript:void(0);" target="_blank">
-                            <img src="http://test.guoshanchina.com/uploads/person/{{ item.from }}.jpg" class="layui-circle layim-msgbox-avatar" onerror="javascript:this.src='../../../../../../uploads/person/empty2.jpg'">
+                            <img src="http://test.guoshanchina.com/uploads/person/{{ item.from }}.jpg" class="layui-circle layim-msgbox-avatar" onerror="javascript:this.src='https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2670702686,3423622119&fm=26&gp=0.jpg'">
                           </a>
                           <p class="layim-msgbox-user">
                             <a href="javascript:void(0);" target="_blank"><b>{{ item.username||'' }}</b></a>
@@ -149,10 +149,12 @@
 layui.config({
     base: '../../../../../../static/js/'
 }).extend({
-    socket: 'socket'
+    socket: 'socket',
+    req:'req'
 });        
-layui.use(['layim', 'flow','socket'], function (socket) {
+layui.use(['layim', 'flow','socket','req'], function (socket,reqs) {
     var layim = layui.layim, layer = layui.layer, laytpl = layui.laytpl, $ = layui.jquery, flow = layui.flow;
+    var req=layui.req
         
 var formatDate = function (now) { 
      var myDate = new Date(now);
@@ -164,8 +166,8 @@ var formatDate = function (now) {
     var renderMsg = function (page, callback){
         //实际部署时，请将下述 getmsg.json 改为你的接口地址
         var cachedata = parent.layui.layim.cache();  
-        var url = '../../../../../../'+cachedata.base.getMsgBox.url || {};  
-        $.get(url, {page: page || 1}, function(data){
+        var url = '../../../../../../'+cachedata.base.getMsgBox.url || {};
+        req.get(url, {page: page || 1}, function(data){
             var res = eval('(' + data + ')');
             if(res.code != 0){
                 return layer.msg(res.msg);

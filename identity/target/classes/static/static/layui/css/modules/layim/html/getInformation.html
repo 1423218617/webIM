@@ -71,7 +71,7 @@
 <script type="text/html" title="资料模版" id="LAY_tpl" style="display:none;">
 {{# if(d.data.type == 'friend'){ }}
   {{# if(d.mine == d.data.memberIdx){ }}
-    <form class="layui-form" action="">
+    <form class="layui-form" action="/identity/modify_Information">
       <div class="layui-col-xs12 pt15">
         <div class="layui-col-xs6 ">
           <label class="label">昵&nbsp;&nbsp;称</label>
@@ -117,7 +117,7 @@
           <div class="block">
             <select name="job" class="select" style="display: block;">
               <option value="">请选择职业</option>
-              <option value="1" {{# if(d.data.job == '1'){ }} selected="selected" {{# } }}>计算机/互联网/通信</option>  
+              <option value="1" {{# if(d.data.job == '1'){ }} selected="selected" {{# } }}>计算机/互联网/通信</option>
               <option value="2" {{# if(d.data.job == '2'){ }} selected="selected" {{# } }}>生产/工艺/制造</option>
               <option value="3" {{# if(d.data.job == '3'){ }} selected="selected" {{# } }}>医疗/护理/制药</option>
               <option value="4" {{# if(d.data.job == '4'){ }} selected="selected" {{# } }}>金融/银行/投资/保险</option>
@@ -222,20 +222,20 @@
           <label class="label">职&nbsp;&nbsp;业</label>
           <div class="block">
             <label class="label_key">
-               {{# if(d.data.jobs == '1'){ }} 计算机/互联网/通信 {{# } }}
-               {{# if(d.data.jobs == '2'){ }} 生产/工艺/制造 {{# } }}
-               {{# if(d.data.jobs == '3'){ }} 医疗/护理/制药 {{# } }}
-               {{# if(d.data.jobs == '4'){ }} 金融/银行/投资/保险 {{# } }}
-               {{# if(d.data.jobs == '5'){ }} 商业/服务业/个体经营 {{# } }}
-               {{# if(d.data.jobs == '6'){ }} 文化/广告/传媒 {{# } }}
-               {{# if(d.data.jobs == '7'){ }} 娱乐/艺术/表演 {{# } }}
-               {{# if(d.data.jobs == '8'){ }} 律师/法务 {{# } }}
-               {{# if(d.data.jobs == '9'){ }} 教育/培训 {{# } }}
-               {{# if(d.data.jobs == '10'){ }} 公务员/行政/事业单位 {{# } }}
-               {{# if(d.data.jobs == '11'){ }} 模特 {{# } }}
-               {{# if(d.data.jobs == '12'){ }} 空姐 {{# } }}
-               {{# if(d.data.jobs == '13'){ }} 学生 {{# } }}
-               {{# if(d.data.jobs == '14'){ }} 其他 {{# } }}
+               {{# if(d.data.job == '1'){ }} 计算机/互联网/通信 {{# } }}
+               {{# if(d.data.job == '2'){ }} 生产/工艺/制造 {{# } }}
+               {{# if(d.data.job == '3'){ }} 医疗/护理/制药 {{# } }}
+               {{# if(d.data.job == '4'){ }} 金融/银行/投资/保险 {{# } }}
+               {{# if(d.data.job == '5'){ }} 商业/服务业/个体经营 {{# } }}
+               {{# if(d.data.job == '6'){ }} 文化/广告/传媒 {{# } }}
+               {{# if(d.data.job == '7'){ }} 娱乐/艺术/表演 {{# } }}
+               {{# if(d.data.job == '8'){ }} 律师/法务 {{# } }}
+               {{# if(d.data.job == '9'){ }} 教育/培训 {{# } }}
+               {{# if(d.data.job == '10'){ }} 公务员/行政/事业单位 {{# } }}
+               {{# if(d.data.job == '11'){ }} 模特 {{# } }}
+               {{# if(d.data.job == '12'){ }} 空姐 {{# } }}
+               {{# if(d.data.job == '13'){ }} 学生 {{# } }}
+               {{# if(d.data.job == '14'){ }} 其他 {{# } }}
             </label>              
           </div>
       </div>
@@ -275,7 +275,14 @@
 </body>
 <script src="../../../../layui.js"></script>
 <script>
-layui.use(['form','laydate'], function(){
+
+    layui.config({
+        base: '../../../../../../static/js/'
+    }).extend({
+        req:'req'
+    });
+    layui.use(['form','laydate','req'], function(){
+    var req=layui.req
   var form = layui.form
   ,laydate = layui.laydate;
   layui.use(['laydate','form','laytpl'], function(){
@@ -286,9 +293,8 @@ layui.use(['form','laydate'], function(){
     
     param =  location.search;//获得URL参数。该窗口url会携带会话id和type
     var cache = parent.layui.layim.cache();  
-    var url = '../../../../../../'+cache.base.getInformation.url || {};  //获得URL参数。
-    $.get(url+'&'+param, {}, function(data){
-      var res = eval('(' + data + ')');
+    var url = '../../../../../../..'+cache.base.getInformation.url || {};  //获得URL参数。
+    req.get(url+param, {}, function(res){
       if(res.code != 0){
           return layer.msg(res.msg);
       } 
@@ -306,10 +312,10 @@ layui.use(['form','laydate'], function(){
           chat.call(this, othis);
       });    
       form.on('submit(*)', function(submitData){
-        var save_url = '../../../../../../'+cache.base.saveMyInformation.url || {};  //获得URL参数。
+          console.log("保存")
+        var save_url = '../../../../../../..'+cache.base.saveMyInformation.url || {};  //获得URL参数。
         var key_value = submitData.field;
-        $.post(save_url, {key_value}, function(resp){
-          var res = eval('(' + resp + ')');
+        req.post(save_url, {key_value}, function(res){
           if(res.code != 0){
               layer.msg('保存成功!', {icon: 1,time: 1000}); 
           }else{

@@ -21,6 +21,13 @@ public class User implements Serializable {
     private String active;
     private String status;
     private long create_date;
+    private  String birthday;
+    private String blood_type;
+    private String job;
+    private String phoneNumber;
+    private String qq;
+    private String type;
+    private String wechat;
 
     @Override
     public String toString() {
@@ -36,7 +43,82 @@ public class User implements Serializable {
                 ", active='" + active + '\'' +
                 ", status='" + status + '\'' +
                 ", create_date=" + create_date +
+                ", birthday='" + birthday + '\'' +
+                ", blood_type='" + blood_type + '\'' +
+                ", job='" + job + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", qq='" + qq + '\'' +
+                ", type='" + type + '\'' +
+                ", wechat='" + wechat + '\'' +
                 '}';
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
+    public void setIs_active(Integer is_active) {
+        this.is_active = is_active;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getBlood_type() {
+        return blood_type;
+    }
+
+    public void setBlood_type(String blood_type) {
+        this.blood_type = blood_type;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getWechat() {
+        return wechat;
+    }
+
+    public void setWechat(String wechat) {
+        this.wechat = wechat;
     }
 
     public Integer getId() {

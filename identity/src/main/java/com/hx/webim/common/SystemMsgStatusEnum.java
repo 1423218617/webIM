@@ -1,23 +1,35 @@
 package com.hx.webim.common;
 
 public enum SystemMsgStatusEnum {
-    AGREE(1,"同意"),REFUSE(2,"拒绝"),UNTREATED(0,"未处理")
+    AGREE(2,2,"同意"),
+    REFUSE(2,3,"拒绝"),
+    UNTREATED(1,0,"未处理")
 
     ;
-    private Integer code;
+    private Integer type;
+    private Integer status;
     private String msg;
 
-    SystemMsgStatusEnum(Integer code, String msg){
-        this.code=code;
-        this.msg=msg;
+    SystemMsgStatusEnum(Integer type, Integer status, String msg) {
+        this.type = type;
+        this.status = status;
+        this.msg = msg;
     }
 
-    public Integer getCode() {
-        return code;
+    public Integer getType() {
+        return type;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getMsg() {

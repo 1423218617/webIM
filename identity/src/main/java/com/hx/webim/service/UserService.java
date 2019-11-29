@@ -5,6 +5,7 @@ import com.hx.webim.model.pojo.AddMessage;
 import com.hx.webim.model.vo.FriendList;
 import com.hx.webim.model.vo.GroupList;
 import com.hx.webim.model.pojo.User;
+import com.hx.webim.model.vo.UserInfo;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.util.List;
@@ -22,4 +23,5 @@ public interface UserService {
     void add_msg(AddMessage addMessage);
     List<SystemMessage> get_msg(Integer uid);
     boolean modify_msg(Integer msgIdx,Integer msgType,Integer status,Integer mygroupIdx,Integer friendIdx,Integer uid);
+    public UserInfo getInformation(Integer id,String type);
 }

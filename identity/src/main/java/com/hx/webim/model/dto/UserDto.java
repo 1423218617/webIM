@@ -5,6 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDto {
+
+    private  String birthday;
+    private String blood_type;
+    private String job;
+    private String phoneNumber;
+    private String qq;
+    private String type;
+    private String wechat;
+
     private Integer id;
     private String username;
     private String password;
@@ -18,22 +27,61 @@ public class UserDto {
     private long create_date;
     private List<ChatMessage> chatMessageList=new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return "UserDto{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", sign='" + sign + '\'' +
-                ", email='" + email + '\'' +
-                ", avatar='" + avatar + '\'' +
-                ", sex=" + sex +
-                ", is_active=" + is_active +
-                ", active='" + active + '\'' +
-                ", status='" + status + '\'' +
-                ", create_date=" + create_date +
-                ", chatMessageList=" + chatMessageList +
-                '}';
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getBlood_type() {
+        return blood_type;
+    }
+
+    public void setBlood_type(String blood_type) {
+        this.blood_type = blood_type;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public void setJob(String job) {
+        this.job = job;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getWechat() {
+        return wechat;
+    }
+
+    public void setWechat(String wechat) {
+        this.wechat = wechat;
     }
 
     public Integer getId() {
@@ -130,5 +178,30 @@ public class UserDto {
 
     public void setChatMessageList(List<ChatMessage> chatMessageList) {
         this.chatMessageList = chatMessageList;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "birthday='" + birthday + '\'' +
+                ", blood_type='" + blood_type + '\'' +
+                ", job='" + job + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", qq='" + qq + '\'' +
+                ", type='" + type + '\'' +
+                ", wechat='" + wechat + '\'' +
+                ", id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", sign='" + sign + '\'' +
+                ", email='" + email + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", sex=" + sex +
+                ", is_active=" + is_active +
+                ", active='" + active + '\'' +
+                ", status='" + status + '\'' +
+                ", create_date=" + create_date +
+                ", chatMessageList=" + chatMessageList +
+                '}';
     }
 }

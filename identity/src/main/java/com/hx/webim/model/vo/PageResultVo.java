@@ -4,14 +4,13 @@ public class PageResultVo<T> {
     private Integer code;
     private Integer pages;
     private T data;
-    private String memberIdx="1570845";
+    private Integer memberIdx;
 
-
-    public String getMemberIdx() {
+    public Integer getMemberIdx() {
         return memberIdx;
     }
 
-    public void setMemberIdx(String memberIdx) {
+    public void setMemberIdx(Integer memberIdx) {
         this.memberIdx = memberIdx;
     }
 
@@ -37,5 +36,15 @@ public class PageResultVo<T> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+    @Override
+    public String toString() {
+        return "PageResultVo{" +
+                "code=" + code +
+                ", pages=" + pages +
+                ", data=" + data +
+                ", memberIdx='" + memberIdx + '\'' +
+                '}';
     }
 }

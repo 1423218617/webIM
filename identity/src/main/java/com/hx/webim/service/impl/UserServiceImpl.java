@@ -12,6 +12,7 @@ import com.hx.webim.model.vo.FriendList;
 import com.hx.webim.model.vo.GroupList;
 import com.hx.webim.model.pojo.User;
 import com.hx.webim.model.vo.PageResultVo;
+import com.hx.webim.model.vo.UserInfo;
 import com.hx.webim.service.UserService;
 import com.hx.webim.util.*;
 import org.apache.commons.lang3.StringUtils;
@@ -113,13 +114,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(User user) {
         User u=userMapper.selectUser(user);
+
         if (!RedisUtil.hasKey(String.valueOf(u.getId()))){
             UserDto userDto=new UserDto();
             BeanUtils.copyProperties(u,userDto);
             userDto.setStatus("online");
             String userDtoString= JsonUtils.objToString(userDto);
             RedisUtil.set(String.valueOf(userDto.getId()),userDtoString);
+        }else {
+            UserDto userDto= JsonUtils.stringToObj(RedisUtil.get(String.valueOf(u.getId())),UserDto.class);
+            BeanUtils.copyProperties(u,userDto);
+            RedisUtil.set(String.valueOf(u.getId()),JsonUtils.objToString(userDto));
         }
+
         return u;
     }
 
@@ -130,21 +137,34 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<SystemMessage> get_msg(Integer uid) {
+
         List<SystemMessage> systemMessageList=new ArrayList<>();
         List<AddMessage> addMessageList=userMapper.get_msg(uid);
         addMessageList.forEach(addMessage -> {
+            String username;
+            Integer username_id;
+            if (addMessage.getFrom_uid().equals(uid)){
+                username_id=addMessage.getTo_uid();
+            }else {
+                username_id=addMessage.getFrom_uid();
+            }
+            UserDto userDto=JsonUtils.stringToObj(RedisUtil.get(String.valueOf(username_id)),UserDto.class);
+            username=userDto.getUsername();
             SystemMessage systemMessage=new SystemMessage();
-            systemMessage.setFrom(uid);
+            systemMessage.setFrom(addMessage.getFrom_uid());
             systemMessage.setTo(addMessage.getTo_uid());
             systemMessage.setMsgType(addMessage.getType());
             systemMessage.setTime(addMessage.getTime());
             systemMessage.setStatus(addMessage.getAgree());
+            systemMessage.setMsgIdx(addMessage.getId());
+            systemMessage.setUsername(username);
+            systemMessage.setSendTime(DateUtil.getDate()*1000);
+            systemMessage.setReadTime(DateUtil.getDate()*1000);
+            systemMessage.setRemark(addMessage.getRemark());
             systemMessageList.add(systemMessage);
 
         });
-        /*String a="{\"msgIdx\":\"674\",\"msgType\":\"1\",\"from\":\"911088\",\"to\":\"1570845\",\"status\":\"1\",\"remark\":\"\",\"sendTime\":\"1574672286\",\"readTime\":\"1574510341\",\"time\":\"1574672286\",\"adminGroup\":\"0\",\"handle\":null,\"mygroupIdx\":null,\"username\":\"\u5468\u4e8c\",\"signature\":\"\"}";
-        SystemMessage systemMessage=JsonUtils.stringToObj(a,SystemMessage.class);
-        systemMessageList.add(systemMessage);*/
+
 
         return systemMessageList;
 
@@ -154,10 +174,28 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public boolean modify_msg(Integer msgIdx, Integer msgType, Integer status, Integer mygroupIdx, Integer friendIdx,Integer uid) {
+      //  /modify_msg?msgIdx=41&msgType=2&status=2&mygroupIdx=4&friendIdx=126
         userMapper.updateAddMessage(status,msgType,msgIdx);
+        if (status.equals(3)||status.equals(1)){
+            return true;
+        }
         userMapper.insertFriendAndFriend(uid,mygroupIdx,friendIdx);
         AddMessage addMessage=userMapper.selectAddMessageById(msgIdx);
         userMapper.insertFriendAndFriend(addMessage.getFrom_uid(),addMessage.getGroup_id(),addMessage.getTo_uid());
         return true;
+    }
+
+    @Override
+    public UserInfo getInformation(Integer id, String type) {
+        UserDto userDto=JsonUtils.stringToObj(RedisUtil.get(String.valueOf(id)),UserDto.class);
+        UserInfo userInfo=new UserInfo();
+        BeanUtils.copyProperties(userDto,userInfo);
+        userInfo.setEmailAddress(userDto.getEmail());
+        userInfo.setMemberSex(userDto.getSex());
+        userInfo.setSignature(userDto.getSign());
+        userInfo.setType(type);
+        userInfo.setMemberName(userDto.getUsername());
+        userInfo.setMemberIdx(userDto.getId());
+        return userInfo;
     }
 }

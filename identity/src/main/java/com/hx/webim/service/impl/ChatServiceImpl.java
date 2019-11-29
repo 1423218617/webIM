@@ -26,13 +26,15 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public boolean toFriend(SocketMessage message) {
+            Integer fromid=message.getFrom();
+            UserDto from_userDto=JsonUtils.stringToObj(RedisUtil.get(String.valueOf(fromid)),UserDto.class);
             int toid=message.getTo();
             ChatMessage chatMessage=new ChatMessage();
             chatMessage.setAvatar("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2670702686,3423622119&fm=26&gp=0.jpg");
             chatMessage.setContent(message.getContent());
             chatMessage.setType(message.getType());
             chatMessage.setMine(false);
-            chatMessage.setUsername("cc");
+            chatMessage.setUsername(from_userDto.getUsername());
             chatMessage.setTimestamp(DateUtil.getDate()*1000);
             chatMessage.setId(message.getFrom());
             chatMessage.setCid((int)(Math.random()*100));
@@ -43,11 +45,11 @@ public class ChatServiceImpl implements ChatService {
                 chatSocket.send(JsonUtils.objToString(chatMessage));
                 return true;
             }else {
-                UserDto userDto=JsonUtils.stringToObj(RedisUtil.get(String.valueOf(toid)),UserDto.class);
-                List<ChatMessage> chatMessageList=userDto.getChatMessageList();
+                UserDto to_userDto=JsonUtils.stringToObj(RedisUtil.get(String.valueOf(toid)),UserDto.class);
+                List<ChatMessage> chatMessageList=to_userDto.getChatMessageList();
                 chatMessageList.add(chatMessage);
-                userDto.setChatMessageList(chatMessageList);
-                RedisUtil.set(String.valueOf(toid),JsonUtils.objToString(userDto));
+                to_userDto.setChatMessageList(chatMessageList);
+                RedisUtil.set(String.valueOf(toid),JsonUtils.objToString(to_userDto));
                 return true;
             }
     }

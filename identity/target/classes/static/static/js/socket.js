@@ -1,5 +1,6 @@
-﻿layui.define(['jquery', 'layer','contextMenu','form'], function (exports) {
+﻿layui.define(['jquery', 'layer','contextMenu','form','req'], function (exports) {
     var contextMenu = layui.contextMenu;
+    var req=layui.req;
     var $ = layui.jquery;
     var layer = layui.layer;
     var form = layui.form;
@@ -362,7 +363,7 @@
                         // })                         
                     }else if(message.type == 'joinPublicGroupSuccess'){
                         im.audio('新');
-                        var default_avatar = './uploads/person/empty1.jpg';
+                        var default_avatar = 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2670702686,3423622119&fm=26&gp=0.jpg';
                         var avatar = './uploads/person/'+message.from+'.jpg';
                         var options = {
                             groupId: message.from,
@@ -700,7 +701,7 @@
             var avatar = './uploads/person/'+uid+'.jpg';
             var isAdd = false;
             if (type == 'friend') {
-                var default_avatar = './uploads/person/empty2.jpg';
+                var default_avatar = 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2670702686,3423622119&fm=26&gp=0.jpg';
                 if(cachedata.mine.id == uid){//添加的是自己
                     layer.msg('不能添加自己');
                     return false;
@@ -711,7 +712,7 @@
                     });
                 });
             }else{
-                var default_avatar = './uploads/person/empty1.jpg';
+                var default_avatar = 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2670702686,3423622119&fm=26&gp=0.jpg';
                 for (i in cachedata.group)//是否已经加群
                 {
                     if (cachedata.group[i].id == uid) {isAdd = true;break;}
@@ -727,9 +728,9 @@
                 ,type: type
                 ,submit: function(group,remark,index){//确认发送添加请求
                     if (type == 'friend') {
-                        $.get("/identity/add_msg", {to: uid,msgType:1,remark:remark,mygroupIdx:group}, function (res) {
-                            var data = eval('(' + res + ')');
-                            if (data.code == 0) {
+                        console.log("qian")
+                        req.get("/identity/add_msg", {to: uid,msgType:1,remark:remark,mygroupIdx:group}, function (res) {
+                            if (res.code == 0) {
                                 conn.subscribe({
                                     to: uid,
                                     message: remark
@@ -790,16 +791,15 @@
             var status = agree == 2?2:3; 
             if (agree == 2) {
                 if (msgType == 2) {
-                    var default_avatar = './uploads/person/empty2.jpg';
+                    var default_avatar = 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2670702686,3423622119&fm=26&gp=0.jpg';
                     conf.layim.setFriendGroup({
                         type: type
                         , username: username//用户名称或群组名称
                         , avatar: im['IsExist'].call(this, avatar)?avatar:default_avatar
                         , group: cachedata.friend || [] //获取好友分组数据
                         , submit: function (group, index) { 
-                            $.get('/identity/modify_msg', {msgIdx: msgIdx,msgType:msgType,status:status,mygroupIdx:group,friendIdx:uid}, function (res) {
-                                var data = eval('(' + res + ')');
-                                if (data.code == 0) {
+                            req.get('/identity/modify_msg', {msgIdx: msgIdx,msgType:msgType,status:status,mygroupIdx:group,friendIdx:uid}, function (res) {
+                                if (res.code == 0) {
                                     //将好友 追加到主面板
                                     conf.layim.addList({
                                         type: 'friend'
@@ -825,7 +825,7 @@
                         }
                     }); 
                 }else if(msgType = 4){
-                    var default_avatar = './uploads/person/empty1.jpg';
+                    var default_avatar = 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2670702686,3423622119&fm=26&gp=0.jpg';
                     $.get('class/doAction.php?action=modify_msg', {msgIdx: msgIdx,msgType:msgType,status:status}, function (res) {
                         var data = eval('(' + res + ')');
                         if (data.code == 0) {
@@ -866,9 +866,8 @@
                     });                    
                 }
             }else{              
-                $.get('class/doAction.php?action=modify_msg', {msgIdx: msgIdx,msgType:msgType,status:status}, function (res) {
-                    var data = eval('(' + res + ')');
-                    if (data.code == 0) {
+                req.get('/identity/modify_msg', {msgIdx: msgIdx,msgType:msgType,status:status}, function (res) {
+                    if (res.code == 0) {
                         conn.unsubscribed({
                           to: uid,
                           message : 'rejectAddFriend'
@@ -968,7 +967,7 @@
         },        
         userStatus: function(data){
             if (data.id) {
-                $.get('class/doAction.php?action=userStatus', {id:data.id}, function (res) {
+                $.get('/identity/userStatus', {id:data.id}, function (res) {
                     var data = eval('(' + res + ')');
                     if (data.code == 0) {  
                         if (data.data == 'online') {
@@ -1090,7 +1089,7 @@
                                     var friend_name = friend.eq(i).find('span').html();//好友id
                                     var signature = friend.eq(i).find('p').html();//好友id
                                     var avatar = '../uploads/person/'+friend_id+'.jpg';
-                                    var default_avatar = './uploads/person/empty2.jpg';                                    
+                                    var default_avatar = 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2670702686,3423622119&fm=26&gp=0.jpg';
                                     conf.layim.removeList({//将好友从之前分组除去
                                         type: 'friend' 
                                         ,id: friend_id //好友ID
@@ -1345,7 +1344,7 @@
                                 var friend_id = ele.parent().data('id');//要移动的好友id
                                 friend_name = ele.parent().data('name');
                                 var avatar = '../uploads/person/'+friend_id+'.jpg';
-                                var default_avatar = './uploads/person/empty2.jpg';
+                                var default_avatar = 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=2670702686,3423622119&fm=26&gp=0.jpg';
                                 var signature = $('.layim-list-friend').find('#layim-friend'+friend_id).find('p').html();//获取签名
                                 var item = ele.find("ul li");
                                 item.hover(function() {
