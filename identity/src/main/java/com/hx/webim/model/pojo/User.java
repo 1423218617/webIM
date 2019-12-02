@@ -8,13 +8,13 @@ import java.io.Serializable;
 public class User implements Serializable {
 
 
-    private Integer id;
-    private String username;
+    private Integer id;//
+    private String username;//
     private String password;
-    private String sign;
-    private String email;
+    private String sign;//
+    private String email;//
     private String avatar;
-    private Integer sex;
+    private Integer sex;//
     @JsonIgnore
     private Integer is_active;
     @JsonIgnore

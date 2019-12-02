@@ -24,4 +24,5 @@ public interface UserService {
     List<SystemMessage> get_msg(Integer uid);
     boolean modify_msg(Integer msgIdx,Integer msgType,Integer status,Integer mygroupIdx,Integer friendIdx,Integer uid);
     public UserInfo getInformation(Integer id,String type);
+    public boolean modify_Information(UserInfo userInfo);
 }

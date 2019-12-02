@@ -198,4 +198,16 @@ public class UserServiceImpl implements UserService {
         userInfo.setMemberIdx(userDto.getId());
         return userInfo;
     }
+
+    @Override
+    public boolean modify_Information(UserInfo userInfo) {
+        User user=new User();
+        BeanUtils.copyProperties(userInfo,user);
+        user.setUsername(userInfo.getMemberName());
+        user.setEmail(userInfo.getEmailAddress());
+        user.setSign(userInfo.getSignature());
+        user.setSex(userInfo.getMemberSex());
+        System.out.println(user);
+        return true;
+    }
 }

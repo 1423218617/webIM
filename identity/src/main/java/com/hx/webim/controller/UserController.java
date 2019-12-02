@@ -245,9 +245,9 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("modify_Information")
-    public Object getInformation(@RequestBody UserInfo userInfo){
-        System.out.println(userInfo);
-        return null;
+    public Object getInformation( UserInfo userInfo){
+        userService.modify_Information(userInfo);
+        return new ResultVo<>();
     }
 
 }

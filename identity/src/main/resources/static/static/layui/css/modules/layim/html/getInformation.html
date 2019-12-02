@@ -155,7 +155,7 @@
       <div class="layui-col-xs12 pt15">
           <label class="label">邮&nbsp;&nbsp;箱</label>
           <div class="block">
-            <input type="text" class="layui-input" name="emailAddress" id="emailAddress" value="{{d.data.emailAddress}}">
+            <input type="text" class="layui-input" disabled="true" name="emailAddress" id="emailAddress" value="{{d.data.emailAddress}}">
           </div>
       </div>                
       <div class="layui-col-xs12 pt15">
@@ -297,7 +297,7 @@
     req.get(url+param, {}, function(res){
       if(res.code != 0){
           return layer.msg(res.msg);
-      } 
+      }
       var html = laytpl(LAY_tpl.innerHTML).render({
         data: res.data,
         mine: cache.mine.id
@@ -306,20 +306,19 @@
       laydate.render({ 
         elem: '#birthday'
         ,format: 'yyyy年MM月dd日' //可任意组合
-      });  
+      });  });
       $('body').on('click', '.chat', function () {
           var othis = $(this), type = othis.data('type');
           chat.call(this, othis);
-      });    
+      });
       form.on('submit(*)', function(submitData){
-          console.log("保存")
-        var save_url = '../../../../../../..'+cache.base.saveMyInformation.url || {};  //获得URL参数。
+        var save_url = '../../../../../../..'+cache.base.saveMyInformation.url || {};  //获得URL参数
         var key_value = submitData.field;
-        req.post(save_url, {key_value}, function(res){
+        req.post(save_url, key_value, function(res){
           if(res.code != 0){
               layer.msg('保存成功!', {icon: 1,time: 1000}); 
           }else{
-            layer.msg('保存成功!', {icon: 1,time: 1000}); 
+            layer.msg('保存成功!', {icon: 1,time: 1000});
               var index = parent.layer.getFrameIndex(window.name); 
               parent.layer.close(index);
           }
@@ -340,7 +339,7 @@
         var index = parent.layer.getFrameIndex(window.name); 
         parent.layer.close(index);
       });      
-    });
+
 
   });
 }); 

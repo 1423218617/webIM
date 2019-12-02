@@ -22,7 +22,15 @@
         <if test="sex!=null">sex=#{sex},</if>
         <if test="is_active!=null">is_active=#{is_active},</if>
         <if test="avatar!=null">avatar=#{avatar},</if>
-        <if test="status!=null">status=#{status}</if>
+        <if test="status!=null">status=#{status},</if>
+        <if test="birthday!=null">birthday=#{birthday},</if>
+        <if test="blood_type!=null">blood_type=#{blood_type},</if>
+        <if test="job!=null">job=#{job}</if>
+        <if test="phoneNumber!=null">phoneNumber=#{phoneNumber}</if>
+        <if test="qq!=qq">qq=#{qq}</if>
+        <if test="wechat!=null">wechat=#{wechat}</if>
+
+
         where id=#{id}
 
     </update>
