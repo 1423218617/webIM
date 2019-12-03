@@ -1,5 +1,3 @@
- 
- 
 <!DOCTYPE html>
 <html>
 <head>
@@ -69,7 +67,7 @@ layui.use([ 'layim','laypage','form','socket',], function(socket){
   ,form = layui.form
   ,$ = layui.jquery
   ,laypage = layui.laypage;
-	var cache = parent.layui.layim.cache();  
+	var cache = parent.layui.layim.cache();
 	var url = '../../../../../../'+cache.base.getRecommend.url || {};  //获得URL参数。
 
 	$(function(){getRecommend(); });

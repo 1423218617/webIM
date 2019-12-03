@@ -13,7 +13,29 @@
         <if test="id!=null">and id=#{id}</if>
         <if test="active!=null">and active=#{active}</if>
         <if test="email!=null">and email=#{email}</if>
+        <if test="username!=null">and username=#{username}</if>
+        <if test="phoneNumber!=null">and phoneNumber=#{phoneNumber}</if>
+
     </select>
+    <select id="selectUserList" parameterType="com.hx.webim.model.pojo.User" resultType="com.hx.webim.model.pojo.User">
+        select * from t_user where 1=1
+        <if test="id!=null">or id=#{id}</if>
+        <if test="active!=null">or active=#{active}</if>
+        <if test="email!=null">or email=#{email}</if>
+        <if test="username!=null">or username=#{username}</if>
+        <if test="phoneNumber!=null">or phoneNumber=#{phoneNumber}</if>
+
+    </select>
+    <select id="selectFounderByGroupId" parameterType="com.hx.webim.model.pojo.Group" resultType="com.hx.webim.model.pojo.Group">
+        select * from t_group where id=#{id}
+    </select>
+    <select id="selectGroupList" parameterType="com.hx.webim.model.pojo.Group" resultType="com.hx.webim.model.pojo.Group">
+        select * from t_group where 1=1 or group_name=#{group_name}
+    </select>
+    <insert id="addMember">
+        insert into t_group_members(gid, uid) VALUE {#{gid},#{uid}
+    </insert>
+
     <update id="updateUser" parameterType="com.hx.webim.model.pojo.User" >
         update t_user set 
         <if test="username!=null">username=#{username},</if>
@@ -29,8 +51,6 @@
         <if test="phoneNumber!=null">phoneNumber=#{phoneNumber},</if>
         <if test="qq!=qq">qq=#{qq},</if>
         <if test="wechat!=null">wechat=#{wechat}</if>
-
-
         where id=#{id}
 
     </update>

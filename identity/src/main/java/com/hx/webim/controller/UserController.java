@@ -3,10 +3,12 @@ package com.hx.webim.controller;
 
 import com.hx.webim.common.ResultEnum;
 import com.hx.webim.common.SystemMsgStatusEnum;
+import com.hx.webim.mapper.UserMapper;
 import com.hx.webim.model.TokenModel;
 import com.hx.webim.model.dto.SystemMessage;
 import com.hx.webim.model.dto.UserDto;
 import com.hx.webim.model.pojo.AddMessage;
+import com.hx.webim.model.pojo.Group;
 import com.hx.webim.model.vo.*;
 import com.hx.webim.model.pojo.User;
 import com.hx.webim.service.UserService;
@@ -41,6 +43,9 @@ public class UserController {
 
     @Resource
     private UserService userService;
+
+    @Resource
+    private UserMapper userMapper;
 
 
     /**
@@ -147,13 +152,37 @@ public class UserController {
     @GetMapping("findFriendTotal")
     @ResponseBody
     public Object findFriendTotal(@RequestParam("type") String type,@RequestParam("value") String value,@RequestParam(value = "page",required = false) String page) {
-
-        if(page!=null)
-        return "{'code':'0','msg':'','data':[{'memberIdx':'911058','memberName':'\u848b\u848b','signature':'\u6211\u4e0d\u662f3','birthday':'2017\u5e7412\u670814\u65e5','memberSex':'1'}]}";
+        ResultVo resultVo=new ResultVo(ResultEnum.SUCCESS);
+        switch (type){
+            case "friend":
+                User user=new User();
+                user.setEmail(value);
+                user.setUsername(value);
+                user.setPhoneNumber(value);
+                if(page!=null){
+                    List<UserInfo> userInfoList=userService.findFriendTotal(user,type);
+                    resultVo.setData(userInfoList);
+                    return JsonUtils.objToString(resultVo);
+                }
+                break;
+            case "group":
+                Group group=new Group();
+                group.setGroup_name(value);
+                if (page!=null){
+                    List<GroupInfo> groupInfoList=userService.findFriendTotal(group,type);
+                    resultVo.setData(groupInfoList);
+                    return JsonUtils.objToString(resultVo);
+                }
+        }
         return "{'code':0,'count':'','data':{'count':'1','limit':'1'}}";
 
     }
 
+
+    /**
+     * @description 推荐好友
+     * @return
+     */
     @GetMapping("getRecommend")
     @ResponseBody
     public Object getRecommend(){
@@ -165,6 +194,9 @@ public class UserController {
     public Object add_msg(HttpServletRequest request,@RequestParam Integer to,
                           @RequestParam Integer msgType,@RequestParam String remark,
                           @RequestParam Integer mygroupIdx){
+        if (msgType.equals(3)){
+            to=userMapper.selectFounderByGroupId(to).getCreate_id();
+        }
         TokenModel t =RequestUtil.getTokenByRequest(request);
         Integer uid=TokenUtil.getIdByToken(t);
         AddMessage addMessage=new AddMessage();
@@ -245,7 +277,10 @@ public class UserController {
 
     @ResponseBody
     @PostMapping("modify_Information")
-    public Object getInformation( UserInfo userInfo){
+    public Object getInformation( HttpServletRequest request, UserInfo userInfo){
+        TokenModel t =RequestUtil.getTokenByRequest(request);
+        Integer uid=TokenUtil.getIdByToken(t);
+        userInfo.setMemberIdx(uid);
         userService.modify_Information(userInfo);
         return new ResultVo<>();
     }

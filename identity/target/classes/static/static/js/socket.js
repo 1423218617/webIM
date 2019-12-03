@@ -741,7 +741,14 @@
                             }
                         });
                     }else{
-                        var options = {
+                        req.get("/identity/add_msg", {to: uid,msgType:3,remark:remark,mygroupIdx:uid}, function (res) {
+                            if (res.code == 0) {
+                                layer.msg('你申请加入'+name+'的消息已发送。请等待管理员确认');
+                            }else{
+                                layer.msg('你申请加入'+name+'的消息发送失败。请刷新浏览器后重试');
+                            }
+                        });
+                       /* var options = {
                             groupId: uid,
                             success: function(resp) {
                                 if (approval == '1') {
@@ -764,7 +771,7 @@
                                 }
                             }
                         };
-                        conn.joinGroup(options);
+                        conn.joinGroup(options);*/
                     }
                 },function(){
                     layer.close(index);

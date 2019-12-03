@@ -2,6 +2,7 @@ package com.hx.webim.mapper;
 
 
 import com.hx.webim.model.pojo.AddMessage;
+import com.hx.webim.model.pojo.Group;
 import com.hx.webim.model.vo.FriendList;
 import com.hx.webim.model.vo.GroupList;
 import com.hx.webim.model.pojo.User;
@@ -15,6 +16,7 @@ public interface UserMapper {
     void insertUser(User user);
     User selectUser(User user);
     void updateUser(User user);
+    List<User> selectUserList(User user);
     List<String> UserAllEmail();
     List<FriendList> findFriendGroupsById(Integer uid);
     List<User> findUsersByFriendGroupIds(Integer fgid);
@@ -25,4 +27,7 @@ public interface UserMapper {
     void updateAddMessage(Integer agree,Integer type,Integer msgIdx);
     void insertFriendAndFriend(Integer from_uid,Integer group_id,Integer to_uid);
     AddMessage selectAddMessageById(Integer id);
+    List<Group> selectGroupList(Group group);
+    Group selectFounderByGroupId(Integer group_id);
+    void addMember(Integer gid,Integer uid);
 }

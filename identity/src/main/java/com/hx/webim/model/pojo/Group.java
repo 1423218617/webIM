@@ -10,9 +10,19 @@ public class Group {
     @JsonProperty("groupname")
     private String group_name;
     private String avatar;
+    private String sign;
     @JsonIgnore
-    private String create_id;
+    private Integer create_id;
     private Date create_time;
+
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
 
     public Integer getId() {
         return id;
@@ -38,11 +48,11 @@ public class Group {
         this.avatar = avatar;
     }
 
-    public String getCreate_id() {
+    public Integer getCreate_id() {
         return create_id;
     }
 
-    public void setCreate_id(String create_id) {
+    public void setCreate_id(Integer create_id) {
         this.create_id = create_id;
     }
 

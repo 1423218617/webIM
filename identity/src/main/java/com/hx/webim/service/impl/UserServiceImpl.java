@@ -8,11 +8,9 @@ import com.hx.webim.model.dto.ChatMessage;
 import com.hx.webim.model.dto.SystemMessage;
 import com.hx.webim.model.dto.UserDto;
 import com.hx.webim.model.pojo.AddMessage;
-import com.hx.webim.model.vo.FriendList;
-import com.hx.webim.model.vo.GroupList;
+import com.hx.webim.model.pojo.Group;
+import com.hx.webim.model.vo.*;
 import com.hx.webim.model.pojo.User;
-import com.hx.webim.model.vo.PageResultVo;
-import com.hx.webim.model.vo.UserInfo;
 import com.hx.webim.service.UserService;
 import com.hx.webim.util.*;
 import org.apache.commons.lang3.StringUtils;
@@ -179,9 +177,14 @@ public class UserServiceImpl implements UserService {
         if (status.equals(3)||status.equals(1)){
             return true;
         }
-        userMapper.insertFriendAndFriend(uid,mygroupIdx,friendIdx);
         AddMessage addMessage=userMapper.selectAddMessageById(msgIdx);
-        userMapper.insertFriendAndFriend(addMessage.getFrom_uid(),addMessage.getGroup_id(),addMessage.getTo_uid());
+        if (msgType.equals(2)){
+            userMapper.insertFriendAndFriend(uid,mygroupIdx,friendIdx);
+            userMapper.insertFriendAndFriend(addMessage.getFrom_uid(),addMessage.getGroup_id(),addMessage.getTo_uid());
+            return true;
+        }
+        userMapper.addMember(addMessage.getGroup_id(),addMessage.getFrom_uid());
+
         return true;
     }
 
@@ -207,7 +210,43 @@ public class UserServiceImpl implements UserService {
         user.setEmail(userInfo.getEmailAddress());
         user.setSign(userInfo.getSignature());
         user.setSex(userInfo.getMemberSex());
+        user.setId(userInfo.getMemberIdx());
+        userMapper.updateUser(user);
         System.out.println(user);
         return true;
+    }
+
+    @Override
+    public List findFriendTotal(Object value,String type) {
+        if (type.equals("friend")){
+            User user=(User)value;
+            List<User> userList=userMapper.selectUserList(user);
+            List<UserInfo> userInfoList=new ArrayList<>();
+            userList.forEach(user1 -> {
+                UserInfo userInfo=new UserInfo();
+                userInfo.setMemberIdx(user1.getId());
+                userInfo.setSignature(user1.getSign());
+                userInfo.setMemberName(user1.getUsername());
+                userInfo.setMemberSex(user1.getSex());
+                userInfo.setBirthday(user1.getBirthday());
+                userInfoList.add(userInfo);
+            });
+            return userInfoList;
+        }else if(type.equals("group")){
+            Group group=(Group)value;
+            List<GroupInfo> groupInfoList=new ArrayList<>();
+            List<Group> groupList=userMapper.selectGroupList(group);
+            groupList.forEach(group1 -> {
+                GroupInfo groupInfo=new GroupInfo();
+                groupInfo.setGroupIdx(group1.getId());
+                groupInfo.setDes(group1.getSign());
+                groupInfo.setApproval(1);
+                groupInfo.setNumber(500);
+                groupInfo.setGroupName(group1.getGroup_name());
+                groupInfoList.add(groupInfo);
+            });
+            return groupInfoList;
+        }
+        return null;
     }
 }
